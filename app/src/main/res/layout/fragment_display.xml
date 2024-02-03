@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DisplayFragment">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/pageHeading"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:text="Page Heading"
+        android:textAlignment="center"
+        android:textSize="30sp" />
+
+    <!-- Include the Date Picker in a hidden state -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="553dp">
+
+        <LinearLayout
+            android:id="@+id/examContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Space
+            android:layout_width="290dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+
+        <Button
+            android:id="@+id/button_addExam"
+            android:layout_width="68dp"
+            android:layout_height="83dp"
+            android:layout_weight="1"
+            android:backgroundTint="#E37272"
+            android:text="+"
+            android:textSize="20dp" />
+    </LinearLayout>
+
+</LinearLayout>
+
+
+</FrameLayout>
