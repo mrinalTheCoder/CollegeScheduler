@@ -32,8 +32,7 @@ public class AddFragment extends Fragment {
         binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(AddFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
+                // TODO
             }
         });
     }

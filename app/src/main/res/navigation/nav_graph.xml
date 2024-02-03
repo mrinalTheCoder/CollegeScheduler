@@ -10,19 +10,47 @@
         android:name="com.example.collegescheduler.HomeFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_home">
-
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/AddFragment" />
+            android:id="@+id/action_HomeFragment_to_displayFragment"
+            app:destination="@id/displayFragment" />
+        <argument
+            android:name="ActionItems"
+            app:argType="java.util.ArrayList" />
     </fragment>
     <fragment
         android:id="@+id/AddFragment"
         android:name="com.example.collegescheduler.AddFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_add">
-
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
+            android:id="@+id/action_AddFragment_to_displayFragment"
+            app:destination="@id/displayFragment" />
+        <argument
+            android:name="ActionItems"
+            app:argType="java.util.ArrayList" />
+        <argument
+            android:name="Index"
+            app:argType="integer" />
+        <argument
+            android:name="ItemType"
+            app:argType="com.example.collegescheduler.Items" />
+    </fragment>
+    <fragment
+        android:id="@+id/displayFragment"
+        android:name="com.example.collegescheduler.DisplayFragment"
+        android:label="fragment_display"
+        tools:layout="@layout/fragment_display" >
+        <argument
+            android:name="ActionItems"
+            app:argType="java.util.ArrayList" />
+        <argument
+            android:name="ItemType"
+            app:argType="com.example.collegescheduler.Items" />
+        <action
+            android:id="@+id/action_displayFragment_to_AddFragment"
+            app:destination="@id/AddFragment" />
+        <action
+            android:id="@+id/action_displayFragment_to_HomeFragment"
             app:destination="@id/HomeFragment" />
     </fragment>
 </navigation>
