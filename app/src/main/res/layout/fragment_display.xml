@@ -6,58 +6,50 @@
     android:layout_height="match_parent"
     tools:context=".DisplayFragment">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/pageHeading"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="53dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="1"
-        android:text="Page Heading"
-        android:textAlignment="center"
-        android:textSize="30sp" />
-
-    <!-- Include the Date Picker in a hidden state -->
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="553dp">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
         <LinearLayout
-            android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <!-- Include the Date Picker in a hidden state -->
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                </LinearLayout>
+            </ScrollView>
 
 
         </LinearLayout>
-    </ScrollView>
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="116dp"
-        android:layout_weight="1">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="98dp"
             android:layout_height="68dp"
             android:layout_gravity="bottom|end"
+            android:layout_marginBottom="20dp"
             app:fabCustomSize="67.5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.909"
+            app:layout_constraintHorizontal_bias="0.953"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@android:drawable/ic_input_add" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</LinearLayout>
 
 
 </FrameLayout>

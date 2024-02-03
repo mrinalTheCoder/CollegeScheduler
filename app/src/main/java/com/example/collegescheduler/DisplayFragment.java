@@ -14,6 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toolbar;
+
+import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.ArrayList;
 
@@ -35,15 +38,13 @@ public class DisplayFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment DisplayFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DisplayFragment newInstance(String param1, String param2) {
+    public static DisplayFragment newInstance() {
         DisplayFragment fragment = new DisplayFragment();
+
         Bundle args = new Bundle();
-        //args.putString(ARG_PARAM1, param1);
         //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
@@ -51,7 +52,9 @@ public class DisplayFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             items = DisplayFragmentArgs.fromBundle(getArguments()).getActionItems();
             itemType = DisplayFragmentArgs.fromBundle(getArguments()).getItemType();
@@ -61,13 +64,19 @@ public class DisplayFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
+        MaterialToolbar toolbar = (MaterialToolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(itemType.toString().toUpperCase());
+
+
         return inflater.inflate(R.layout.fragment_display, container, false);
     }
 
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+
+
         //items = DisplayFragmentArgs.fromBundle(getArguments()).getActionItems();
         //itemType = DisplayFragmentArgs.fromBundle(getArguments()).getItemType();
         repopulateCardView(view);
