@@ -8,11 +8,12 @@
     tools:context=".AddFragment">
 
     <TextView
+        android:id="@+id/form"
         style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="Form"
         android:textAlignment="center"
         android:textSize="30sp" />
@@ -85,7 +86,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="20dp"
+        android:layout_marginVertical="10dp"
         android:layout_marginHorizontal="20dp">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -105,14 +106,17 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
+            android:layout_width="370dp"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:background="@android:drawable/editbox_background"
+            android:backgroundTint="@android:color/transparent"
             android:drawableRight="@android:drawable/arrow_down_float"
             android:drawablePadding="16dp"
             android:hint="Days of the Week"
-            android:padding="12dp" />
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -127,7 +131,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Location"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -182,7 +186,7 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/saveButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_gravity="center"
         android:layout_marginHorizontal="20dp"
         android:text="Save"

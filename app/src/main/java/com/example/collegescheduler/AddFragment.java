@@ -28,6 +28,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,11 +47,15 @@ public class AddFragment extends Fragment {
     String professor;
     String classSection;
 
+    String roomNo;
+
     String date;
 
     String time;
 
     TextView textView;
+
+    private Items formType = Items.COURSE;
     boolean[] selectedDays;
     ArrayList<Integer> daysList = new ArrayList<>();
     String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
@@ -65,9 +70,11 @@ public class AddFragment extends Fragment {
         String classSection;
         String date;
         String time;
+
+        String roomNo;
         ArrayList<Integer> daysList;
 
-        public void setFormData(String title, String course, String location, String professor, String classSection, String date, String time, ArrayList<Integer> daysList) {
+        public void setFormData(String title, String course, String location, String professor, String classSection, String date, String time, String roomNo, ArrayList<Integer> daysList) {
             this.title = title;
             this.course = course;
             this.location = location;
@@ -75,6 +82,7 @@ public class AddFragment extends Fragment {
             this.classSection = classSection;
             this.date = date;
             this.time = time;
+            this.roomNo = roomNo;
             this.daysList = daysList;
         }
     }
@@ -174,6 +182,22 @@ public class AddFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        if (formType == Items.COURSE) {
+            binding.form.setText("Course Details");
+            binding.textView.setVisibility(View.VISIBLE);
+            binding.professor.setVisibility(View.VISIBLE);
+            binding.classSection.setVisibility(View.VISIBLE);
+            binding.location.setVisibility(View.VISIBLE);
+            binding.roomNo.setVisibility(View.VISIBLE);
+        } else if (formType == Items.ASSIGNMENT) {
+            binding.form.setText("Assignment Details");
+        } else if (formType == Items.EXAM) {
+            binding.form.setText("Exam Details");
+            binding.location.setVisibility(View.VISIBLE);
+        } else {
+            binding.form.setText("To Do List Details");
+        }
+
         binding.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -184,13 +208,38 @@ public class AddFragment extends Fragment {
                 classSection = binding.classSection.getText().toString();
                 date = binding.date.getText().toString();
                 time = binding.time.getText().toString();
+                roomNo = binding.roomNo.getText().toString();
 
                 FormData formData1 = new FormData();
-                formData1.setFormData(title, course, location, professor, classSection, date, time, daysList);
+                formData1.setFormData(title, course, location, professor, classSection, date, time, roomNo, daysList);
 
-                for (Integer i : formData1.daysList) {
-                    Log.d("yo", String.valueOf(i));
-                }
+                Toast.makeText(getActivity(), "Save successful!",
+                        Toast.LENGTH_LONG).show();
+
+                binding.textView.setText("");
+                binding.title.setText("");
+                binding.course.setText("");
+                binding.location.setText("");
+                binding.professor.setText("");
+                binding.classSection.setText("");
+                binding.date.setText("");
+                binding.time.setText("");
+                binding.roomNo.setText("");
+
+                /*
+                Log.d("yo", formData1.title);
+                Log.d("yo", formData1.course);
+                Log.d("yo", formData1.location);
+                Log.d("yo", formData1.professor);
+                Log.d("yo", formData1.classSection);
+                Log.d("yo", formData1.date);
+                Log.d("yo", formData1.time);
+                Log.d("yo", formData1.roomNo);
+
+                for(Integer i: formData1.daysList) {
+                    Log.d("blah", String.valueOf(i));
+                }*/
+
                 //NavHostFragment.findNavController(AddFragment.this)
                         //.navigate(R.id.action_SecondFragment_to_FirstFragment);
             }
