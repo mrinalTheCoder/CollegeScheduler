@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import java.util.Arrays;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
@@ -36,38 +37,44 @@ import java.util.Collections;
 
 public class AddFragment extends Fragment {
     private FragmentAddBinding binding;
-    private Calendar date;
+    //private Calendar date;
     private Context context = getActivity();
 
-    TextView title;
-    TextView course;
-    TextView location;
-    TextView professor;
-    TextView classSection;
+    String title;
+    String course;
+    String location;
+    String professor;
+    String classSection;
+
+    String date;
+
+    String time;
 
     TextView textView;
     boolean[] selectedDays;
     ArrayList<Integer> daysList = new ArrayList<>();
     String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
-    private FormData formData = new FormData(title, course, location, professor, classSection, date, daysList);
+    private FormData formData;
 
     class FormData{
-        TextView title;
-        TextView course;
-        TextView location;
-        TextView professor;
-        TextView classSection;
-
-        Calendar date;
+        String title;
+        String course;
+        String location;
+        String professor;
+        String classSection;
+        String date;
+        String time;
         ArrayList<Integer> daysList;
-        FormData(TextView title, TextView course, TextView location, TextView professor, TextView classSection, Calendar date, ArrayList<Integer> daysList) {
+
+        public void setFormData(String title, String course, String location, String professor, String classSection, String date, String time, ArrayList<Integer> daysList) {
             this.title = title;
             this.course = course;
             this.location = location;
             this.professor = professor;
             this.classSection = classSection;
             this.date = date;
+            this.time = time;
             this.daysList = daysList;
         }
     }
@@ -170,14 +177,22 @@ public class AddFragment extends Fragment {
         binding.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TextView title = binding.title;
-                TextView course = binding.course;
-                TextView location = binding.location;
-                TextView professor = binding.professor;
-                TextView classSection = binding.classSection;
+                title = binding.title.getText().toString();
+                course = binding.course.getText().toString();
+                location = binding.location.getText().toString();
+                professor = binding.professor.getText().toString();
+                classSection = binding.classSection.getText().toString();
+                date = binding.date.getText().toString();
+                time = binding.time.getText().toString();
 
-                NavHostFragment.findNavController(AddFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
+                FormData formData1 = new FormData();
+                formData1.setFormData(title, course, location, professor, classSection, date, time, daysList);
+
+                for (Integer i : formData1.daysList) {
+                    Log.d("yo", String.valueOf(i));
+                }
+                //NavHostFragment.findNavController(AddFragment.this)
+                        //.navigate(R.id.action_SecondFragment_to_FirstFragment);
             }
         });
     }
@@ -188,7 +203,8 @@ public class AddFragment extends Fragment {
         binding = null;
     }
 
-    public void popDateTimePicker() {
+
+    /*public void popDateTimePicker() {
         final Calendar currentDate = Calendar.getInstance();
         date = Calendar.getInstance();
         new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
@@ -204,6 +220,19 @@ public class AddFragment extends Fragment {
                 }, currentDate.get(Calendar.HOUR_OF_DAY), currentDate.get(Calendar.MINUTE), false).show();
             }
         }, currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DATE)).show();
+    }*/
+
+    public FormData getFormData() {
+        return formData;
+    }
+
+    public static AddFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        AddFragment fragment = new AddFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
 }
