@@ -42,4 +42,8 @@ public class TodoItem extends ActionItem implements Parcelable {
             return new TodoItem[size];
         }
     };
+
+    public boolean isComplete() {
+        return complete;
+    }
 }

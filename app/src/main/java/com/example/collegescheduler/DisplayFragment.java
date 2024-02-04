@@ -12,6 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.collegescheduler.databinding.FragmentDisplayBinding;
 import com.example.collegescheduler.databinding.FragmentHomeBinding;
@@ -34,6 +37,24 @@ class SortByCourse implements Comparator<ActionItem> {
     @Override
     public int compare(ActionItem a, ActionItem b) {
         return a.getCourse().compareTo(b.getCourse());
+    }
+}
+
+class SortByComplete implements Comparator<ActionItem> {
+
+    @Override
+    public int compare(ActionItem a, ActionItem b) {
+        TodoItem A = (TodoItem) a;
+        TodoItem B = (TodoItem) b;
+        if (A.isComplete() ^ B.isComplete()) {
+            if (A.isComplete() && !B.isComplete()) {
+                return 1;
+            } else {
+                return -1;
+            }
+        } else {
+            return 0;
+        }
     }
 }
 
@@ -106,7 +127,24 @@ public class DisplayFragment extends Fragment {
             }
         });
 
-        items.sort(new SortByDate());
+        RadioGroup radioGroup = view.findViewById(R.id.sortOptions);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton radioButton = view.findViewById(checkedId);
+                switch (radioButton.getText().toString().toLowerCase()) {
+                    case "date":
+                        items.sort(new SortByDate());
+                        break;
+                    case "course":
+                        items.sort(new SortByCourse());
+                        break;
+                    case "complete":
+                        items.sort(new SortByComplete());
+                        break;
+                }
+            }
+        });
         repopulateCardView(view, items);
     }
 
