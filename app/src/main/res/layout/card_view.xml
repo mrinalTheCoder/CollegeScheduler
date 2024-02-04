@@ -7,9 +7,9 @@
     app:cardBackgroundColor="#EAA1A1"
     app:cardCornerRadius="10dp">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="16dp">
 
         <!-- Name TextView -->
@@ -33,7 +33,7 @@
 
         <!-- Time TextView -->
         <TextView
-            android:id="@+id/textTime"
+            android:id="@+id/textCourse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/textDate"
@@ -42,16 +42,18 @@
             android:textSize="14sp" />
 
         <!-- Location TextView -->
+
+        <!-- Delete Button -->
+
         <TextView
             android:id="@+id/textLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textTime"
-            android:layout_marginTop="4dp"
-            android:text="Location: Some Place"
+            android:layout_below="@id/textCourse"
+            android:layout_marginTop="31dp"
+            android:text="Time: 10:00 AM"
             android:textSize="14sp" />
 
-        <!-- Delete Button -->
         <ImageButton
             android:id="@+id/btnDelete"
             android:layout_width="wrap_content"

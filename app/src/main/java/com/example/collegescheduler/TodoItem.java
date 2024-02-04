@@ -4,8 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class TodoItem extends ActionItem implements Parcelable {
-    private boolean complete;
-    private final boolean isAssignment;
+    protected boolean complete;
+    protected final boolean isAssignment;
 
     public TodoItem(String title, String date, String course, boolean isAssignment, Items itemType) {
         super(title, date, course, itemType);
@@ -42,7 +42,6 @@ public class TodoItem extends ActionItem implements Parcelable {
             return new TodoItem[size];
         }
     };
-
     public boolean isComplete() {
         return complete;
     }

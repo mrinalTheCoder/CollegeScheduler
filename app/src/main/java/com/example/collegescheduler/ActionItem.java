@@ -6,10 +6,10 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 public class ActionItem implements Parcelable {
-    private String title;
-    private String date;
-    private String course;
-    private final Items itemType;
+    protected String title;
+    protected String date;
+    protected String course;
+    protected final Items itemType;
 
     public ActionItem(String title, String date, String course, Items itemType) {
         this.title = title;
@@ -50,6 +50,8 @@ public class ActionItem implements Parcelable {
         parcel.writeInt(itemType.ordinal());
     }
 
+    public String getTitle() {return title;}
+
     public String getDate() {
         return date;
     }
@@ -61,4 +63,9 @@ public class ActionItem implements Parcelable {
     public Items getItemType() {
         return itemType;
     }
+    public getCardView() {
+
+
+    }
+
 }

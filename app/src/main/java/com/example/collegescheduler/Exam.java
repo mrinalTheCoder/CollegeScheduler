@@ -16,4 +16,8 @@ public class Exam extends TodoItem implements Parcelable {
         super.writeToParcel(dest, flags);
         dest.writeString(location);
     }
+
+    public String getLocation() {
+        return this.location;
+    }
 }
