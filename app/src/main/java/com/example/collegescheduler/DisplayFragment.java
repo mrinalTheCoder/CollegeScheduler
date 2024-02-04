@@ -18,6 +18,24 @@ import com.example.collegescheduler.databinding.FragmentHomeBinding;
 import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+class SortByDate implements Comparator<ActionItem> {
+
+    @Override
+    public int compare(ActionItem a, ActionItem b) {
+        return a.getDate().compareTo(b.getDate());
+    }
+}
+
+class SortByCourse implements Comparator<ActionItem> {
+
+    @Override
+    public int compare(ActionItem a, ActionItem b) {
+        return a.getCourse().compareTo(b.getCourse());
+    }
+}
 
 /**
  * A simple {@link Fragment} subclass.
@@ -88,10 +106,11 @@ public class DisplayFragment extends Fragment {
             }
         });
 
-        repopulateCardView(view);
+        items.sort(new SortByDate());
+        repopulateCardView(view, items);
     }
 
-    public void repopulateCardView(View view) {
+    public void repopulateCardView(View view, ArrayList<ActionItem> items) {
         LinearLayout linearLayout = view.findViewById(R.id.container);
         linearLayout.removeAllViews();
 
