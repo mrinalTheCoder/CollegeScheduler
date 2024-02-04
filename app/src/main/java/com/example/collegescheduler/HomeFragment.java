@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.collegescheduler.databinding.FragmentHomeBinding;
+import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.ArrayList;
 
@@ -24,6 +26,8 @@ public class HomeFragment extends Fragment {
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
+
+
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -40,7 +44,6 @@ public class HomeFragment extends Fragment {
         items = temp.getActionItems().getParcelableArrayList("action_item");
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("action_items", items);
-
         binding.buttonExam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
