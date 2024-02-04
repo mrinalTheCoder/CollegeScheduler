@@ -382,7 +382,8 @@ public class AddFragment extends Fragment {
             }
 
             if ((items.get(index).itemType == Items.COURSE)) {
-                binding.textView.setText(((Course) item).getDays());
+                binding.textView.setText(daysToDaysList(((Course) item).getDays()));
+                updateDays(((Course) item).getDays());
             } else {
                 binding.textView.setText("");
             }
@@ -398,6 +399,42 @@ public class AddFragment extends Fragment {
             binding.roomNo.setText("");
         }
     }
+
+    public void updateDays(String days) {
+        for (int i = 0; i < 7; i++) {
+            selectedDays[i] = false;
+        }
+
+        String dayChars = "MTWRFSN";
+        for (int i = 0; i < days.length(); i++) {
+            for (int j = 0; j < dayChars.length(); j++) {
+                if (days.charAt(i) == dayChars.charAt(j)) {
+                    selectedDays[j] = true;
+                }
+            }
+        }
+
+        daysList.clear();
+
+        for (int i = 0; i < selectedDays.length; i++) {
+            if (selectedDays[i]) {
+                daysList.add(i);
+            }
+        }
+    }
+
+    public String daysToDaysList(String s) {
+        s = s.replace("M", "Monday, ");
+        s = s.replace("T", "Tuesday, ");
+        s = s.replace("W", "Wednesday, ");
+        s = s.replace("R", "Thursday, ");
+        s = s.replace("F", "Friday, ");
+        s = s.replace("S", "Saturday, ");
+        s = s.replace("N", "Sunday");
+        s = s.substring(0, s.length() - 2);
+        return s;
+    }
+
 
     public static ArrayList<ActionItem> getItem() {
         return items;
