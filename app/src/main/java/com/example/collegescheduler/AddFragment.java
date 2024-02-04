@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
+
+import java.text.ParseException;
 import java.util.Arrays;
 import android.widget.TimePicker;
 
@@ -40,6 +42,12 @@ public class AddFragment extends Fragment {
     private FragmentAddBinding binding;
     //private Calendar date;
     private Context context = getActivity();
+    private ArrayList<FormData> formDataArrayList = new ArrayList<>();
+    private ArrayList<ActionItem> items;
+
+    private int index;
+
+    private int foundInArrayListIndex = -1;
 
     String title;
     String course;
@@ -55,7 +63,7 @@ public class AddFragment extends Fragment {
 
     TextView textView;
 
-    private Items formType = Items.COURSE;
+    private Items formType;
     boolean[] selectedDays;
     ArrayList<Integer> daysList = new ArrayList<>();
     String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
@@ -71,10 +79,12 @@ public class AddFragment extends Fragment {
         String date;
         String time;
 
+        Items formType;
+
         String roomNo;
         ArrayList<Integer> daysList;
 
-        public void setFormData(String title, String course, String location, String professor, String classSection, String date, String time, String roomNo, ArrayList<Integer> daysList) {
+        public void setFormData(String title, String course, String location, String professor, String classSection, String date, String time, String roomNo, Items formType, ArrayList<Integer> daysList) {
             this.title = title;
             this.course = course;
             this.location = location;
@@ -84,6 +94,7 @@ public class AddFragment extends Fragment {
             this.time = time;
             this.roomNo = roomNo;
             this.daysList = daysList;
+            this.formType = formType;
         }
     }
 
@@ -182,10 +193,9 @@ public class AddFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         @NonNull AddFragmentArgs args = AddFragmentArgs.fromBundle(getArguments());
-        ArrayList<ActionItem> items = args.getActionItems().getParcelableArrayList("action_item");
-        int index = args.getIndex();
+        items = args.getActionItems().getParcelableArrayList("action_item");
+        index = args.getIndex();
         formType = args.getItemType();
 
         if (formType == Items.COURSE) {
@@ -207,6 +217,18 @@ public class AddFragment extends Fragment {
         binding.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                if (index <= items.size() - 1) {
+//                    binding.textView.setText("");
+//                    binding.title.setText("");
+//                    binding.course.setText("");
+//                    binding.location.setText("");
+//                    binding.professor.setText("");
+//                    binding.classSection.setText("");
+//                    binding.date.setText("");
+//                    binding.time.setText("");
+//                    binding.roomNo.setText("");
+//                }
+
                 title = binding.title.getText().toString();
                 course = binding.course.getText().toString();
                 location = binding.location.getText().toString();
@@ -217,10 +239,24 @@ public class AddFragment extends Fragment {
                 roomNo = binding.roomNo.getText().toString();
 
                 FormData formData1 = new FormData();
-                formData1.setFormData(title, course, location, professor, classSection, date, time, roomNo, daysList);
+                formData1.setFormData(title, course, location, professor, classSection, date, time, roomNo, formType, daysList);
 
                 Toast.makeText(getActivity(), "Save successful!",
                         Toast.LENGTH_LONG).show();
+
+                if (index > items.size() - 1) {
+                    try {
+                        items.add(formDataToActionItem(formData1));
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    try {
+                        items.set(index, formDataToActionItem(formData1));
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
 
                 binding.textView.setText("");
                 binding.title.setText("");
@@ -247,7 +283,7 @@ public class AddFragment extends Fragment {
                 }*/
 
                 //NavHostFragment.findNavController(AddFragment.this)
-                        //.navigate(R.id.action_SecondFragment_to_FirstFragment);
+                //.navigate(R.id.action_SecondFragment_to_FirstFragment);
             }
         });
     }
@@ -279,6 +315,52 @@ public class AddFragment extends Fragment {
 
     public FormData getFormData() {
         return formData;
+    }
+
+    public String listToDays(ArrayList<Integer> list) {
+        String days = "";
+        for (int i : list) {
+            if (i == 0) {
+                days += "M";
+            }
+            if (i == 1) {
+                days += "T";
+            }
+            if (i == 2) {
+                days += "W";
+            }
+            if (i == 3) {
+                days += "R";
+            }
+            if (i == 4) {
+                days += "F";
+            }
+            if (i == 5) {
+                days += "S";
+            }
+            if (i == 6) {
+                days += "N";
+            }
+        }
+        return days;
+    }
+
+    public ActionItem formDataToActionItem(FormData formData) throws ParseException {
+        ActionItem item;
+        if (formData.formType == Items.COURSE) {
+            item = new Course(formData.title, formData.date, listToDays(formData.daysList), formData.course, formData.classSection, formData.professor, formData.location);
+        } else if (formData.formType == Items.EXAM) {
+            item = new Exam(formData.title, formData.date, formData.course, formData.location);
+        } else if (formData.formType == Items.ASSIGNMENT) {
+            item = new TodoItem(formData.title, formData.date, formData.course, true);
+        } else {
+            item = new TodoItem(formData.title, formData.date, formData.course, true);
+        }
+        return item;
+    }
+
+    public ArrayList<FormData> getFormDataArrayList() {
+        return formDataArrayList;
     }
 
     public static AddFragment newInstance() {
