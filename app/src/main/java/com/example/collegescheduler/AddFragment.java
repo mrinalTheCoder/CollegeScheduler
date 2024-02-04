@@ -217,17 +217,60 @@ public class AddFragment extends Fragment {
         binding.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (index <= items.size() - 1) {
-//                    binding.textView.setText("");
-//                    binding.title.setText("");
-//                    binding.course.setText("");
-//                    binding.location.setText("");
-//                    binding.professor.setText("");
-//                    binding.classSection.setText("");
-//                    binding.date.setText("");
-//                    binding.time.setText("");
-//                    binding.roomNo.setText("");
-//                }
+                ActionItem item = items.get(index);
+                String[] itemDataTime = item.getDate().split("\\s+");
+                if (index <= items.size() - 1) {
+                    binding.title.setText(item.getTitle());
+                    binding.course.setText(item.getCourse());
+
+                    if ((items.get(index).itemType == Items.COURSE)) {
+                        binding.location.setText((((Course) item).getLocation().split("\\s+"))[0]);
+                    } else {
+                        binding.location.setText("");
+                    }
+                    if ((items.get(index).itemType == Items.EXAM)) {
+                        binding.location.setText((((Exam) item).getLocation().split("\\s+"))[0]);
+                    } else {
+                        binding.location.setText("");
+                    }
+
+                    if ((items.get(index).itemType == Items.COURSE)) {
+                        binding.professor.setText(((Course) item).getProf());
+                    } else {
+                        binding.professor.setText("");
+                    }
+
+                    binding.classSection.setText(item.getCourse());
+                    binding.date.setText(itemDataTime[0]);
+                    binding.time.setText(itemDataTime[1]);
+
+                    if ((items.get(index).itemType == Items.COURSE)) {
+                        binding.roomNo.setText((((Course) item).getLocation().split("\\s+"))[1]);
+                    } else {
+                        binding.roomNo.setText("");
+                    }
+                    if ((items.get(index).itemType == Items.EXAM)) {
+                        binding.roomNo.setText((((Exam) item).getLocation().split("\\s+"))[1]);
+                    } else {
+                        binding.roomNo.setText("");
+                    }
+
+                    if ((items.get(index).itemType == Items.COURSE)) {
+                        binding.textView.setText(((Course) item).getDays());
+                    } else {
+                        binding.textView.setText("");
+                    }
+                } else {
+                    binding.textView.setText("");
+                    binding.title.setText("");
+                    binding.course.setText("");
+                    binding.location.setText("");
+                    binding.professor.setText("");
+                    binding.classSection.setText("");
+                    binding.date.setText("");
+                    binding.time.setText("");
+                    binding.roomNo.setText("");
+                }
 
                 title = binding.title.getText().toString();
                 course = binding.course.getText().toString();
@@ -348,13 +391,13 @@ public class AddFragment extends Fragment {
     public ActionItem formDataToActionItem(FormData formData) throws ParseException {
         ActionItem item;
         if (formData.formType == Items.COURSE) {
-            item = new Course(formData.title, formData.date, listToDays(formData.daysList), formData.course, formData.classSection, formData.professor, formData.location);
+            item = new Course(formData.title, formData.date + " " + formData.time, listToDays(formData.daysList), formData.course, formData.classSection, formData.professor, formData.location + " " + formData.roomNo);
         } else if (formData.formType == Items.EXAM) {
-            item = new Exam(formData.title, formData.date, formData.course, formData.location);
+            item = new Exam(formData.title, formData.date + " " + formData.time, formData.course,formData.location + " " + formData.roomNo);
         } else if (formData.formType == Items.ASSIGNMENT) {
-            item = new TodoItem(formData.title, formData.date, formData.course, true);
+            item = new TodoItem(formData.title, formData.date + " " + formData.time, formData.course, true, Items.ASSIGNMENT);
         } else {
-            item = new TodoItem(formData.title, formData.date, formData.course, true);
+            item = new TodoItem(formData.title, formData.date + " " + formData.time, formData.course, true, Items.TODO);
         }
         return item;
     }

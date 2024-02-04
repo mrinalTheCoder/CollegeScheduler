@@ -176,7 +176,7 @@ public class DisplayFragment extends Fragment {
             textName.setText(item.getTitle());
             textDate.setText(item.getDate());
             textCourse.setText(item.getCourse());
-            textDate.setText(item.getLocation());
+            //textDate.setText(item.getLocation());
 
             //textLocation.setText(item.getLocation());
             linearLayout.addView(cardView);
