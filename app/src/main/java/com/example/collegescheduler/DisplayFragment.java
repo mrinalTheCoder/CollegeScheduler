@@ -12,6 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
+import android.widget.TextView;
 
 import com.example.collegescheduler.databinding.FragmentDisplayBinding;
 import com.example.collegescheduler.databinding.FragmentHomeBinding;
@@ -34,6 +38,24 @@ class SortByCourse implements Comparator<ActionItem> {
     @Override
     public int compare(ActionItem a, ActionItem b) {
         return a.getCourse().compareTo(b.getCourse());
+    }
+}
+
+class SortByComplete implements Comparator<ActionItem> {
+
+    @Override
+    public int compare(ActionItem a, ActionItem b) {
+        TodoItem A = (TodoItem) a;
+        TodoItem B = (TodoItem) b;
+        if (A.isComplete() ^ B.isComplete()) {
+            if (A.isComplete() && !B.isComplete()) {
+                return 1;
+            } else {
+                return -1;
+            }
+        } else {
+            return 0;
+        }
     }
 }
 
@@ -106,29 +128,59 @@ public class DisplayFragment extends Fragment {
             }
         });
 
-        items.sort(new SortByDate());
-        repopulateCardView(view, items);
+        ArrayList<ActionItem> sortedItems = new ArrayList<>();
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getItemType() == itemType) {
+                sortedItems.add(items.get(i));
+            }
+        }
+        RadioGroup radioGroup = view.findViewById(R.id.sortOptions);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton radioButton = view.findViewById(checkedId);
+                switch (radioButton.getText().toString().toLowerCase()) {
+                    case "date":
+                        sortedItems.sort(new SortByDate());
+                        break;
+                    case "course":
+                        sortedItems.sort(new SortByCourse());
+                        break;
+                    case "complete":
+                        sortedItems.sort(new SortByComplete());
+                        break;
+                }
+            }
+        });
+        repopulateCardView(view, sortedItems);
     }
 
     public void repopulateCardView(View view, ArrayList<ActionItem> items) {
         LinearLayout linearLayout = view.findViewById(R.id.container);
         linearLayout.removeAllViews();
 
-        for (int i = 0 ; i < 10; i++) {
+        items.add(new Exam("Exam 1", "20240304", "Math", "Howey"));
+        items.add(new Exam("Exam 2", "20240404", "Chem", "Culk"));
+        items.add(new Exam("Exam 3", "20240204", "CS", "Skiles"));
+        items.add(new Exam("Exam 4", "20240104", "Physics", "Howey"));
+        for (ActionItem item : items) {
         // Inflate the content layout for each item
-        CardView cardView = (CardView) LayoutInflater.from(getContext()).inflate(R.layout.card_view, linearLayout, false);
+            CardView cardView = (CardView) LayoutInflater.from(getContext()).inflate(R.layout.card_view, linearLayout, false);
 
-        // Update the TextViews or other views inside the CardView
-        //TextView titleTextView = itemLayout.findViewById(R.id.titleTextView); // Replace with your actual TextView ID
-        //TextView descriptionTextView = itemLayout.findViewById(R.id.descriptionTextView); // Replace with your actual TextView ID
+            // Update the TextViews or other views inside the CardView
+            TextView textName = cardView.findViewById(R.id.textName);
+            TextView textDate = cardView.findViewById(R.id.textDate);
+            TextView textLocation = cardView.findViewById(R.id.textLocation);
+            TextView textCourse = cardView.findViewById(R.id.textCourse);
 
-        // Set data to the TextViews
-        //titleTextView.setText(data.getTitle());
-        //descriptionTextView.setText(data.getDescription());
+            textName.setText(item.getTitle());
+            textDate.setText(item.getDate());
+            textCourse.setText(item.getCourse());
+            textDate.setText(item.getLocation());
 
-        // Add the item layout to the CardView
-        linearLayout.addView(cardView);
-    }
+            //textLocation.setText(item.getLocation());
+            linearLayout.addView(cardView);
+        }
 
     }
 }
