@@ -27,6 +27,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         @NonNull Bundle bundle = HomeFragmentArgs.fromBundle(getArguments()).getActionItems();
+
         binding.buttonExam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

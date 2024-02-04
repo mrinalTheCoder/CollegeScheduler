@@ -63,9 +63,9 @@ public class ActionItem implements Parcelable {
     public Items getItemType() {
         return itemType;
     }
-    public getCardView() {
-
-
-    }
+//    public getCardView() {
+//
+//
+//    }
 
 }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.Arrays;
 import android.widget.TimePicker;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
@@ -182,11 +183,23 @@ public class AddFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         @NonNull AddFragmentArgs args = AddFragmentArgs.fromBundle(getArguments());
+        Bundle bundle = args.getActionItems();
         ArrayList<ActionItem> items = args.getActionItems().getParcelableArrayList("action_item");
         int index = args.getIndex();
         formType = args.getItemType();
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                AddFragmentDirections.ActionAddFragmentToDisplayFragment action = AddFragmentDirections.actionAddFragmentToDisplayFragment(
+                        formType,
+                        bundle
+                );
+                NavHostFragment.findNavController(AddFragment.this).navigate(action);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
 
         if (formType == Items.COURSE) {
             binding.form.setText("Course Details");

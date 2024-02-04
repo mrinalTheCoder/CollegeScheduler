@@ -2,6 +2,7 @@ package com.example.collegescheduler;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -128,6 +129,17 @@ public class DisplayFragment extends Fragment {
             }
         });
 
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                DisplayFragmentDirections.ActionDisplayFragmentToHomeFragment action = DisplayFragmentDirections.actionDisplayFragmentToHomeFragment(
+                        bundle
+                );
+                NavHostFragment.findNavController(DisplayFragment.this).navigate(action);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+
         ArrayList<ActionItem> sortedItems = new ArrayList<>();
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getItemType() == itemType) {
@@ -176,7 +188,6 @@ public class DisplayFragment extends Fragment {
             textName.setText(item.getTitle());
             textDate.setText(item.getDate());
             textCourse.setText(item.getCourse());
-            textDate.setText(item.getLocation());
 
             //textLocation.setText(item.getLocation());
             linearLayout.addView(cardView);
