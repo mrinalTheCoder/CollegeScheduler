@@ -68,6 +68,8 @@ class SortByComplete implements Comparator<ActionItem> {
 public class DisplayFragment extends Fragment {
     private FragmentDisplayBinding binding;
     private ArrayList<ActionItem> items;
+
+    private ArrayList<ActionItem> mainItems = new ArrayList<>();
     private Items itemType;
 
     public DisplayFragment() {
@@ -98,8 +100,10 @@ public class DisplayFragment extends Fragment {
         if (getArguments() != null) {
             items = DisplayFragmentArgs.fromBundle(getArguments()).getActionItems().getParcelableArrayList("action_items");
             itemType = DisplayFragmentArgs.fromBundle(getArguments()).getItemType();
+            if (items != null) {
+                mainItems.addAll(items);
+            }
         }
-
 
     }
 
@@ -186,6 +190,9 @@ public class DisplayFragment extends Fragment {
         for (ActionItem item : items) {
         // Inflate the content layout for each item
             CardView cardView = (CardView) LayoutInflater.from(getContext()).inflate(R.layout.card_view, linearLayout, false);
+            cardView.setTag("cardview" + mainItems.indexOf(item));
+            cardView.findViewById(R.id.btnModify).setTag("btnModify" + mainItems.indexOf(item));
+
             linearLayout.addView(item.modifyCardView(cardView));
         }
 
