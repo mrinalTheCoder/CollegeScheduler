@@ -195,7 +195,7 @@ public class AddFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
+        fillForm();
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -228,9 +228,10 @@ public class AddFragment extends Fragment {
         binding.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*
                 items.add(new ActionItem("", "", "", null));
                 index = items.size() - 1;
-                ActionItem item = items.get(index);
+
 
 
                 String[] itemDataTime;
@@ -238,60 +239,8 @@ public class AddFragment extends Fragment {
                     itemDataTime = new String[2];
                 } else {
                     itemDataTime = item.getDate().split(" ");
-                }
+                }*/
                 //String[] itemDataTime = {"20", "10"};
-                if (index <= items.size() - 1) {
-                    binding.title.setText(item.getTitle());
-                    binding.course.setText(item.getCourse());
-
-                    if ((items.get(index).itemType == Items.COURSE)) {
-                        binding.location.setText((((Course) item).getLocation().split("\\s+"))[0]);
-                    } else {
-                        binding.location.setText("");
-                    }
-                    if ((items.get(index).itemType == Items.EXAM)) {
-                        binding.location.setText((((Exam) item).getLocation().split("\\s+"))[0]);
-                    } else {
-                        binding.location.setText("");
-                    }
-
-                    if ((items.get(index).itemType == Items.COURSE)) {
-                        binding.professor.setText(((Course) item).getProf());
-                    } else {
-                        binding.professor.setText("");
-                    }
-
-                    binding.classSection.setText(item.getCourse());
-                    binding.date.setText(itemDataTime[0]);
-                    binding.time.setText(itemDataTime[1]);
-
-                    if ((items.get(index).itemType == Items.COURSE)) {
-                        binding.roomNo.setText((((Course) item).getLocation().split("\\s+"))[1]);
-                    } else {
-                        binding.roomNo.setText("");
-                    }
-                    if ((items.get(index).itemType == Items.EXAM)) {
-                        binding.roomNo.setText((((Exam) item).getLocation().split("\\s+"))[1]);
-                    } else {
-                        binding.roomNo.setText("");
-                    }
-
-                    if ((items.get(index).itemType == Items.COURSE)) {
-                        binding.textView.setText(((Course) item).getDays());
-                    } else {
-                        binding.textView.setText("");
-                    }
-                } else {
-                    binding.textView.setText("");
-                    binding.title.setText("");
-                    binding.course.setText("");
-                    binding.location.setText("");
-                    binding.professor.setText("");
-                    binding.classSection.setText("");
-                    binding.date.setText("");
-                    binding.time.setText("");
-                    binding.roomNo.setText("");
-                }
 
                 title = binding.title.getText().toString();
                 course = binding.course.getText().toString();
@@ -386,6 +335,63 @@ public class AddFragment extends Fragment {
         AddFragment fragment = new AddFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void fillForm() {
+        if (index <= items.size() - 1) {
+            ActionItem item = items.get(index);
+            String[] itemDataTime = item.getDate().split("\\s+");
+            binding.title.setText(item.getTitle());
+            binding.course.setText(item.getCourse());
+
+            if ((items.get(index).itemType == Items.COURSE)) {
+                binding.location.setText((((Course) item).getLocation().split("\\s+"))[0]);
+            } else {
+                binding.location.setText("");
+            }
+            if ((items.get(index).itemType == Items.EXAM)) {
+                binding.location.setText((((Exam) item).getLocation().split("\\s+"))[0]);
+            } else {
+                binding.location.setText("");
+            }
+
+            if ((items.get(index).itemType == Items.COURSE)) {
+                binding.professor.setText(((Course) item).getProf());
+            } else {
+                binding.professor.setText("");
+            }
+
+            binding.classSection.setText(item.getCourse());
+            binding.date.setText(itemDataTime[0]);
+            binding.time.setText(itemDataTime[1]);
+
+            if ((items.get(index).itemType == Items.COURSE)) {
+                binding.roomNo.setText((((Course) item).getLocation().split("\\s+"))[1]);
+            } else {
+                binding.roomNo.setText("");
+            }
+            if ((items.get(index).itemType == Items.EXAM)) {
+                binding.roomNo.setText((((Exam) item).getLocation().split("\\s+"))[1]);
+            } else {
+                binding.roomNo.setText("");
+            }
+
+            if ((items.get(index).itemType == Items.COURSE)) {
+                binding.textView.setText(((Course) item).getDays());
+            } else {
+                binding.textView.setText("");
+            }
+        } else {
+            binding.textView.setText("");
+            binding.title.setText("");
+            binding.course.setText("");
+            binding.location.setText("");
+            binding.professor.setText("");
+            binding.classSection.setText("");
+            binding.date.setText("");
+            binding.time.setText("");
+            binding.roomNo.setText("");
+        }
     }
 
 }
