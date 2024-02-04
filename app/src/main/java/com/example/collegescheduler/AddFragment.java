@@ -182,6 +182,12 @@ public class AddFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+        @NonNull AddFragmentArgs args = AddFragmentArgs.fromBundle(getArguments());
+        ArrayList<ActionItem> items = args.getActionItems().getParcelableArrayList("action_item");
+        int index = args.getIndex();
+        formType = args.getItemType();
+
         if (formType == Items.COURSE) {
             binding.form.setText("Course Details");
             binding.textView.setVisibility(View.VISIBLE);
