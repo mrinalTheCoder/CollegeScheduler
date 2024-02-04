@@ -1,7 +1,11 @@
 package com.example.collegescheduler;
 
+import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.TextView;
+
+import androidx.cardview.widget.CardView;
 
 public class TodoItem extends ActionItem implements Parcelable {
     protected boolean complete;
@@ -44,5 +48,13 @@ public class TodoItem extends ActionItem implements Parcelable {
     };
     public boolean isComplete() {
         return complete;
+    }
+
+    public CardView modifyCardView(CardView cardView) {
+        cardView = super.modifyCardView(cardView);
+        if (this.complete) {
+            cardView.setCardBackgroundColor(Color.parseColor("#90EE90"));
+        }
+        return cardView;
     }
 }

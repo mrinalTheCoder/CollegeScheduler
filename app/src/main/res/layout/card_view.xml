@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/textCourse"
-            android:layout_marginTop="31dp"
+            android:layout_marginTop="4dp"
             android:text="Time: 10:00 AM"
             android:textSize="14sp" />
 
