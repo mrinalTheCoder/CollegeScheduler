@@ -33,6 +33,18 @@ public class Course extends ActionItem implements Parcelable {
         dest.writeString(location);
     }
 
+    public String getDays() {
+        return days;
+    }
+
+    public String getProf() {
+        return prof;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
     @Override
     public int describeContents() {
         return 0;
