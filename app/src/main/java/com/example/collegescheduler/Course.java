@@ -12,7 +12,7 @@ public class Course extends ActionItem implements Parcelable {
     private String location; // includes room number
 
     public Course(String title, String date, String days, String courseCode, String section, String prof, String location) throws ParseException {
-        super(title, date, courseCode + " " + section);
+        super(title, date, courseCode + " " + section, Items.COURSE);
         this.days = days;
         this.prof = prof;
         this.location = location;

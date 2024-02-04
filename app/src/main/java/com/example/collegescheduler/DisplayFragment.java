@@ -127,6 +127,12 @@ public class DisplayFragment extends Fragment {
             }
         });
 
+        ArrayList<ActionItem> sortedItems = new ArrayList<>();
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getItemType() == itemType) {
+                sortedItems.add(items.get(i));
+            }
+        }
         RadioGroup radioGroup = view.findViewById(R.id.sortOptions);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -134,18 +140,18 @@ public class DisplayFragment extends Fragment {
                 RadioButton radioButton = view.findViewById(checkedId);
                 switch (radioButton.getText().toString().toLowerCase()) {
                     case "date":
-                        items.sort(new SortByDate());
+                        sortedItems.sort(new SortByDate());
                         break;
                     case "course":
-                        items.sort(new SortByCourse());
+                        sortedItems.sort(new SortByCourse());
                         break;
                     case "complete":
-                        items.sort(new SortByComplete());
+                        sortedItems.sort(new SortByComplete());
                         break;
                 }
             }
         });
-        repopulateCardView(view, items);
+        repopulateCardView(view, sortedItems);
     }
 
     public void repopulateCardView(View view, ArrayList<ActionItem> items) {

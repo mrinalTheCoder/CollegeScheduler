@@ -7,7 +7,7 @@ public class Exam extends TodoItem implements Parcelable {
     private String location;
 
     public Exam (String name, String date, String course, String location) {
-        super(name, date, course, false);
+        super(name, date, course, false, Items.EXAM);
         this.location = location;
     }
 

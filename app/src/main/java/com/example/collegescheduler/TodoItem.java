@@ -7,8 +7,8 @@ public class TodoItem extends ActionItem implements Parcelable {
     private boolean complete;
     private final boolean isAssignment;
 
-    public TodoItem(String title, String date, String course, boolean isAssignment) {
-        super(title, date, course);
+    public TodoItem(String title, String date, String course, boolean isAssignment, Items itemType) {
+        super(title, date, course, itemType);
         this.complete = false;
         this.isAssignment = isAssignment;
     }
