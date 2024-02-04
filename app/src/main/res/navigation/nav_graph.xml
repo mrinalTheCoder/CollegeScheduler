@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/HomeFragment">
+    app:startDestination="@id/entryFragment">
 
     <fragment
         android:id="@+id/HomeFragment"
@@ -11,11 +11,11 @@
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_HomeFragment_to_displayFragment"
-            app:destination="@id/displayFragment" />
+            android:id="@+id/action_HomeFragment_to_DisplayFragment"
+            app:destination="@id/DisplayFragment" />
         <argument
             android:name="ActionItems"
-            app:argType="java.util.ArrayList" />
+            app:argType="android.os.Bundle" />
     </fragment>
     <fragment
         android:id="@+id/AddFragment"
@@ -23,34 +23,43 @@
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_add">
         <action
-            android:id="@+id/action_AddFragment_to_displayFragment"
-            app:destination="@id/displayFragment" />
-        <argument
-            android:name="ActionItems"
-            app:argType="java.util.ArrayList" />
+            android:id="@+id/action_AddFragment_to_DisplayFragment"
+            app:destination="@id/DisplayFragment" />
         <argument
             android:name="Index"
             app:argType="integer" />
         <argument
             android:name="ItemType"
             app:argType="com.example.collegescheduler.Items" />
+        <argument
+            android:name="ActionItems"
+            app:argType="android.os.Bundle" />
     </fragment>
     <fragment
-        android:id="@+id/displayFragment"
+        android:id="@+id/DisplayFragment"
         android:name="com.example.collegescheduler.DisplayFragment"
         android:label="fragment_display"
         tools:layout="@layout/fragment_display" >
         <argument
-            android:name="ActionItems"
-            app:argType="java.util.ArrayList" />
-        <argument
             android:name="ItemType"
             app:argType="com.example.collegescheduler.Items" />
         <action
-            android:id="@+id/action_displayFragment_to_AddFragment"
+            android:id="@+id/action_DisplayFragment_to_AddFragment"
             app:destination="@id/AddFragment" />
         <action
-            android:id="@+id/action_displayFragment_to_HomeFragment"
+            android:id="@+id/action_DisplayFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment" />
+        <argument
+            android:name="ActionItems"
+            app:argType="android.os.Bundle" />
+    </fragment>
+    <fragment
+        android:id="@+id/entryFragment"
+        android:name="com.example.collegescheduler.EntryFragment"
+        android:label="fragment_entry"
+        tools:layout="@layout/fragment_entry" >
+        <action
+            android:id="@+id/action_entryFragment_to_HomeFragment"
             app:destination="@id/HomeFragment" />
     </fragment>
 </navigation>

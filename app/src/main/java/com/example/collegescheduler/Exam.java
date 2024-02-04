@@ -1,13 +1,19 @@
 package com.example.collegescheduler;
 
-import java.io.Serializable;
-import java.text.ParseException;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Exam extends TodoItem implements Serializable {
+public class Exam extends TodoItem implements Parcelable {
     private String location;
 
-    public Exam (String name, String date, String course, String location) throws ParseException {
+    public Exam (String name, String date, String course, String location) {
         super(name, date, course, false);
         this.location = location;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(location);
     }
 }

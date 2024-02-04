@@ -32,14 +32,21 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        items = HomeFragmentArgs.fromBundle(getArguments()).getActionItems();
+//        items.clear();
+//        items.addAll(Arrays.asList(
+//                HomeFragmentArgs.fromBundle(getArguments()).getActionItems()
+//        ));
+        @NonNull HomeFragmentArgs temp = HomeFragmentArgs.fromBundle(getArguments());
+        items = temp.getActionItems().getParcelableArrayList("action_item");
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("action_items", items);
 
         binding.buttonExam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 HomeFragmentDirections.ActionHomeFragmentToDisplayFragment action = HomeFragmentDirections.actionHomeFragmentToDisplayFragment(
-                    new ArrayList<ActionItem>(),
-                    Items.EXAM
+                        Items.EXAM,
+                        bundle
                 );
                 NavHostFragment.findNavController(HomeFragment.this).navigate(action);
             }
@@ -49,8 +56,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 HomeFragmentDirections.ActionHomeFragmentToDisplayFragment action = HomeFragmentDirections.actionHomeFragmentToDisplayFragment(
-                    items,
-                    Items.COURSE
+                        Items.COURSE,
+                        bundle
                 );
                 NavHostFragment.findNavController(HomeFragment.this).navigate(action);
             }
@@ -60,8 +67,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 HomeFragmentDirections.ActionHomeFragmentToDisplayFragment action = HomeFragmentDirections.actionHomeFragmentToDisplayFragment(
-                    items,
-                    Items.ASSIGNMENT
+                        Items.ASSIGNMENT,
+                        bundle
                 );
                 NavHostFragment.findNavController(HomeFragment.this).navigate(action);
             }
@@ -71,8 +78,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 HomeFragmentDirections.ActionHomeFragmentToDisplayFragment action = HomeFragmentDirections.actionHomeFragmentToDisplayFragment(
-                    items,
-                    Items.TODO
+                        Items.TODO,
+                        bundle
                 );
                 NavHostFragment.findNavController(HomeFragment.this).navigate(action);
             }
