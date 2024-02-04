@@ -15,7 +15,7 @@ public class ActionItem implements Parcelable {
     protected String title;
     protected String date;
     protected String course;
-    protected final Items itemType;
+    protected Items itemType;
 
     public ActionItem(String title, String date, String course, Items itemType) {
         this.title = title;
@@ -29,6 +29,9 @@ public class ActionItem implements Parcelable {
         date = in.readString();
         course = in.readString();
         itemType = Items.values()[in.readInt()];
+    }
+    public ActionItem() {
+
     }
 
     public static final Creator<ActionItem> CREATOR = new Creator<ActionItem>() {

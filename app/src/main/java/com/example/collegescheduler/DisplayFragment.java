@@ -121,23 +121,8 @@ public class DisplayFragment extends Fragment {
             myView = view.findViewById(R.id.sortOptionsText);
             myView.setVisibility(View.GONE);
         }
-        Bundle bundle = DisplayFragmentArgs.fromBundle(getArguments()).getActionItems();
-        items = bundle.getParcelableArrayList("action_items");
-        itemType = DisplayFragmentArgs.fromBundle(getArguments()).getItemType();
-
-        items.add(new Exam("Exam 1", "20240304", "Math", "Howey"));
-        items.add(new Exam("Exam 2", "20240404", "Chem", "Culk"));
-        items.add(new Exam("Exam 3", "20240204", "CS", "Skiles"));
-        items.add(new Exam("Exam 4", "20240104", "Physics", "Howey"));
-
-        try {
-            items.add(new Course("Course 1", "20202524", "MTW", "", "A", "Richard", "Skiles"));
-            items.add(new Course("Course 2", "20212524", "TTW", "", "B", "Landry", "Skiles 2"));
-            items.add(new Course("Course 3", "20222524", "WTW", "", "C", "Pedro", "Howey"));
-            items.add(new Course("Course 4", "20232524", "STW", "", "D", "Musae", "Culk"));
-        } catch (Exception e) {
-
-        }
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("action_items", items);
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

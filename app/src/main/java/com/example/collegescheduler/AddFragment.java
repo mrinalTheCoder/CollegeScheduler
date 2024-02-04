@@ -85,6 +85,22 @@ public class AddFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            items = AddFragmentArgs.fromBundle(getArguments()).getActionItems().getParcelableArrayList("action_items");
+            formType = AddFragmentArgs.fromBundle(getArguments()).getItemType();
+            index = AddFragmentArgs.fromBundle(getArguments()).getIndex();
+        }
+
+
+
+
+    }
+
+    @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
@@ -179,15 +195,11 @@ public class AddFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        @NonNull AddFragmentArgs args = AddFragmentArgs.fromBundle(getArguments());
-        Bundle bundle = args.getActionItems();
-        items = args.getActionItems().getParcelableArrayList("action_item");
-        index = args.getIndex();
-        formType = args.getItemType();
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
+                Bundle bundle = AddFragmentArgs.fromBundle(getArguments()).getActionItems();
                 AddFragmentDirections.ActionAddFragmentToDisplayFragment action = AddFragmentDirections.actionAddFragmentToDisplayFragment(
                         formType,
                         bundle
@@ -216,8 +228,18 @@ public class AddFragment extends Fragment {
         binding.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                items.add(new ActionItem("", "", "", null));
+                index = items.size() - 1;
                 ActionItem item = items.get(index);
-                String[] itemDataTime = item.getDate().split("\\s+");
+
+
+                String[] itemDataTime;
+                if (item.getDate().equals("")) {
+                    itemDataTime = new String[2];
+                } else {
+                    itemDataTime = item.getDate().split(" ");
+                }
+                //String[] itemDataTime = {"20", "10"};
                 if (index <= items.size() - 1) {
                     binding.title.setText(item.getTitle());
                     binding.course.setText(item.getCourse());
