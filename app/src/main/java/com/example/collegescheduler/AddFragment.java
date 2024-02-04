@@ -94,10 +94,6 @@ public class AddFragment extends Fragment {
             formType = AddFragmentArgs.fromBundle(getArguments()).getItemType();
             index = AddFragmentArgs.fromBundle(getArguments()).getIndex();
         }
-
-
-
-
     }
 
     @Override
@@ -271,13 +267,13 @@ public class AddFragment extends Fragment {
                     }
                 }
 
-                Bundle newBundle = new Bundle();
-                newBundle.putParcelableArrayList("action_items", items);
-                AddFragmentDirections.ActionAddFragmentToDisplayFragment action = AddFragmentDirections.actionAddFragmentToDisplayFragment(
-                        formType,
-                        newBundle
-                );
-                NavHostFragment.findNavController(AddFragment.this).navigate(action);
+                //Bundle newBundle = new Bundle();
+                //newBundle.putParcelableArrayList("action_items", items);
+                //AddFragmentDirections.ActionAddFragmentToDisplayFragment action = AddFragmentDirections.actionAddFragmentToDisplayFragment(
+                        //formType,
+                        //newBundle
+                //);
+                //NavHostFragment.findNavController(AddFragment.this).navigate(action);
 
                 binding.textView.setText("");
                 binding.title.setText("");
