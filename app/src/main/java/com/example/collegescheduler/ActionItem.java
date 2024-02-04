@@ -45,4 +45,12 @@ public class ActionItem implements Parcelable {
         parcel.writeString(date);
         parcel.writeString(course);
     }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getCourse() {
+        return course;
+    }
 }
