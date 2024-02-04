@@ -1,9 +1,15 @@
 package com.example.collegescheduler;
 
+import static java.security.AccessController.getContext;
+
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.view.LayoutInflater;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 
 public class ActionItem implements Parcelable {
     protected String title;
@@ -63,9 +69,17 @@ public class ActionItem implements Parcelable {
     public Items getItemType() {
         return itemType;
     }
-    public getCardView() {
+    public CardView modifyCardView(CardView cardView) {
+        // Update the TextViews or other views inside the CardView
+        TextView textName = cardView.findViewById(R.id.textName);
+        TextView textDate = cardView.findViewById(R.id.textDate);
+        TextView textCourse = cardView.findViewById(R.id.textCourse);
 
+        textName.setText(this.title);
+        textDate.setText(this.date);
+        textCourse.setText(this.course);
 
+        return cardView;
     }
 
 }

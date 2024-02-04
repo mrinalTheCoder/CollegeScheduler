@@ -21,6 +21,7 @@ import com.example.collegescheduler.databinding.FragmentDisplayBinding;
 import com.example.collegescheduler.databinding.FragmentHomeBinding;
 import com.google.android.material.appbar.MaterialToolbar;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -42,7 +43,6 @@ class SortByCourse implements Comparator<ActionItem> {
 }
 
 class SortByComplete implements Comparator<ActionItem> {
-
     @Override
     public int compare(ActionItem a, ActionItem b) {
         TodoItem A = (TodoItem) a;
@@ -98,6 +98,8 @@ public class DisplayFragment extends Fragment {
             items = DisplayFragmentArgs.fromBundle(getArguments()).getActionItems().getParcelableArrayList("action_items");
             itemType = DisplayFragmentArgs.fromBundle(getArguments()).getItemType();
         }
+
+
     }
 
     @Override
@@ -112,10 +114,29 @@ public class DisplayFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        if (itemType == Items.COURSE) {
+            View myView = view.findViewById(R.id.sortOptions);
+            myView.setVisibility(View.GONE);
+            myView = view.findViewById(R.id.sortOptionsText);
+            myView.setVisibility(View.GONE);
+        }
         Bundle bundle = DisplayFragmentArgs.fromBundle(getArguments()).getActionItems();
         items = bundle.getParcelableArrayList("action_items");
         itemType = DisplayFragmentArgs.fromBundle(getArguments()).getItemType();
 
+        items.add(new Exam("Exam 1", "20240304", "Math", "Howey"));
+        items.add(new Exam("Exam 2", "20240404", "Chem", "Culk"));
+        items.add(new Exam("Exam 3", "20240204", "CS", "Skiles"));
+        items.add(new Exam("Exam 4", "20240104", "Physics", "Howey"));
+
+        try {
+            items.add(new Course("Course 1", "20202524", "MTW", "", "A", "Richard", "Skiles"));
+            items.add(new Course("Course 2", "20212524", "TTW", "", "B", "Landry", "Skiles 2"));
+            items.add(new Course("Course 3", "20222524", "WTW", "", "C", "Pedro", "Howey"));
+            items.add(new Course("Course 4", "20232524", "STW", "", "D", "Musae", "Culk"));
+        } catch (Exception e) {
+
+        }
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,36 +171,27 @@ public class DisplayFragment extends Fragment {
                         sortedItems.sort(new SortByComplete());
                         break;
                 }
+                repopulateCardView(view, sortedItems);
             }
         });
-        repopulateCardView(view, sortedItems);
+        try {
+            repopulateCardView(view, sortedItems);
+        } catch (Exception e ){
+
+        }
     }
 
     public void repopulateCardView(View view, ArrayList<ActionItem> items) {
         LinearLayout linearLayout = view.findViewById(R.id.container);
         linearLayout.removeAllViews();
 
-        items.add(new Exam("Exam 1", "20240304", "Math", "Howey"));
-        items.add(new Exam("Exam 2", "20240404", "Chem", "Culk"));
-        items.add(new Exam("Exam 3", "20240204", "CS", "Skiles"));
-        items.add(new Exam("Exam 4", "20240104", "Physics", "Howey"));
+
+
+
         for (ActionItem item : items) {
         // Inflate the content layout for each item
             CardView cardView = (CardView) LayoutInflater.from(getContext()).inflate(R.layout.card_view, linearLayout, false);
-
-            // Update the TextViews or other views inside the CardView
-            TextView textName = cardView.findViewById(R.id.textName);
-            TextView textDate = cardView.findViewById(R.id.textDate);
-            TextView textLocation = cardView.findViewById(R.id.textLocation);
-            TextView textCourse = cardView.findViewById(R.id.textCourse);
-
-            textName.setText(item.getTitle());
-            textDate.setText(item.getDate());
-            textCourse.setText(item.getCourse());
-            textDate.setText(item.getLocation());
-
-            //textLocation.setText(item.getLocation());
-            linearLayout.addView(cardView);
+            linearLayout.addView(item.modifyCardView(cardView));
         }
 
     }
