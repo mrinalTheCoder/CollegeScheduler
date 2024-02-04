@@ -19,31 +19,19 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-    private ArrayList<ActionItem> items;
 
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-
-
-
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-//        items.clear();
-//        items.addAll(Arrays.asList(
-//                HomeFragmentArgs.fromBundle(getArguments()).getActionItems()
-//        ));
-        @NonNull HomeFragmentArgs temp = HomeFragmentArgs.fromBundle(getArguments());
-        items = temp.getActionItems().getParcelableArrayList("action_item");
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("action_items", items);
+        @NonNull Bundle bundle = HomeFragmentArgs.fromBundle(getArguments()).getActionItems();
         binding.buttonExam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

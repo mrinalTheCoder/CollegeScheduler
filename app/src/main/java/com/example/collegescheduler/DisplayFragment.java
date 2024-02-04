@@ -1,28 +1,23 @@
 package com.example.collegescheduler;
 
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
-
-import static androidx.core.content.ContextCompat.getSystemService;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toolbar;
 
+import com.example.collegescheduler.databinding.FragmentDisplayBinding;
+import com.example.collegescheduler.databinding.FragmentHomeBinding;
 import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.ArrayList;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,7 +25,7 @@ import java.util.Arrays;
  * create an instance of this fragment.
  */
 public class DisplayFragment extends Fragment {
-
+    private FragmentDisplayBinding binding;
     private ArrayList<ActionItem> items;
     private Items itemType;
 
@@ -71,17 +66,28 @@ public class DisplayFragment extends Fragment {
 
         MaterialToolbar toolbar = (MaterialToolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(itemType.toString().toUpperCase());
-
-
-        return inflater.inflate(R.layout.fragment_display, container, false);
+        binding = FragmentDisplayBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        Bundle bundle = DisplayFragmentArgs.fromBundle(getArguments()).getActionItems();
+        items = bundle.getParcelableArrayList("action_items");
+        itemType = DisplayFragmentArgs.fromBundle(getArguments()).getItemType();
 
+        binding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DisplayFragmentDirections.ActionDisplayFragmentToAddFragment action = DisplayFragmentDirections.actionDisplayFragmentToAddFragment(
+                        items.size(),
+                        itemType,
+                        bundle
+                );
+                NavHostFragment.findNavController(DisplayFragment.this).navigate(action);
+            }
+        });
 
-        //items = DisplayFragmentArgs.fromBundle(getArguments()).getActionItems();
-        //itemType = DisplayFragmentArgs.fromBundle(getArguments()).getItemType();
         repopulateCardView(view);
     }
 
