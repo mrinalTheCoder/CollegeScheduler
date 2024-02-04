@@ -1,20 +1,14 @@
 package com.example.collegescheduler;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.TextView;
 
 import java.text.ParseException;
-import java.util.Arrays;
-import android.widget.TimePicker;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -24,20 +18,11 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.collegescheduler.databinding.FragmentAddBinding;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 
-import android.content.DialogInterface;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 public class AddFragment extends Fragment {
     private FragmentAddBinding binding;
@@ -315,6 +300,14 @@ public class AddFragment extends Fragment {
                     }
                 }
 
+                Bundle newBundle = new Bundle();
+                newBundle.putParcelableArrayList("action_items", items);
+                AddFragmentDirections.ActionAddFragmentToDisplayFragment action = AddFragmentDirections.actionAddFragmentToDisplayFragment(
+                        formType,
+                        newBundle
+                );
+                NavHostFragment.findNavController(AddFragment.this).navigate(action);
+
                 binding.textView.setText("");
                 binding.title.setText("");
                 binding.course.setText("");
@@ -324,23 +317,6 @@ public class AddFragment extends Fragment {
                 binding.date.setText("");
                 binding.time.setText("");
                 binding.roomNo.setText("");
-
-                /*
-                Log.d("yo", formData1.title);
-                Log.d("yo", formData1.course);
-                Log.d("yo", formData1.location);
-                Log.d("yo", formData1.professor);
-                Log.d("yo", formData1.classSection);
-                Log.d("yo", formData1.date);
-                Log.d("yo", formData1.time);
-                Log.d("yo", formData1.roomNo);
-
-                for(Integer i: formData1.daysList) {
-                    Log.d("blah", String.valueOf(i));
-                }*/
-
-                //NavHostFragment.findNavController(AddFragment.this)
-                //.navigate(R.id.action_SecondFragment_to_FirstFragment);
             }
         });
     }
@@ -351,25 +327,6 @@ public class AddFragment extends Fragment {
         binding = null;
     }
 
-
-    /*public void popDateTimePicker() {
-        final Calendar currentDate = Calendar.getInstance();
-        date = Calendar.getInstance();
-        new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                date.set(year, monthOfYear, dayOfMonth);
-                new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        date.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        date.set(Calendar.MINUTE, minute);
-                    }
-                }, currentDate.get(Calendar.HOUR_OF_DAY), currentDate.get(Calendar.MINUTE), false).show();
-            }
-        }, currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DATE)).show();
-    }*/
-
     public FormData getFormData() {
         return formData;
     }
@@ -377,27 +334,7 @@ public class AddFragment extends Fragment {
     public String listToDays(ArrayList<Integer> list) {
         String days = "";
         for (int i : list) {
-            if (i == 0) {
-                days += "M";
-            }
-            if (i == 1) {
-                days += "T";
-            }
-            if (i == 2) {
-                days += "W";
-            }
-            if (i == 3) {
-                days += "R";
-            }
-            if (i == 4) {
-                days += "F";
-            }
-            if (i == 5) {
-                days += "S";
-            }
-            if (i == 6) {
-                days += "N";
-            }
+            days += "MTWRFSN".charAt(i);
         }
         return days;
     }
