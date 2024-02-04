@@ -3,6 +3,7 @@ package com.example.collegescheduler;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ public class AddFragment extends Fragment {
     //private Calendar date;
     private Context context = getActivity();
     private ArrayList<FormData> formDataArrayList = new ArrayList<>();
-    private ArrayList<ActionItem> items;
+    private static ArrayList<ActionItem> items;
 
     private int index;
 
@@ -192,18 +193,18 @@ public class AddFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         fillForm();
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                Bundle bundle = AddFragmentArgs.fromBundle(getArguments()).getActionItems();
-                AddFragmentDirections.ActionAddFragmentToDisplayFragment action = AddFragmentDirections.actionAddFragmentToDisplayFragment(
-                        formType,
-                        bundle
-                );
-                NavHostFragment.findNavController(AddFragment.this).navigate(action);
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+//        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                Bundle bundle = AddFragmentArgs.fromBundle(getArguments()).getActionItems();
+//                AddFragmentDirections.ActionAddFragmentToDisplayFragment action = AddFragmentDirections.actionAddFragmentToDisplayFragment(
+//                        formType,
+//                        bundle
+//                );
+//                NavHostFragment.findNavController(AddFragment.this).navigate(action);
+//            }
+//        };
+//        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
 
         if (formType == Items.COURSE) {
             binding.form.setText("Course Details");
@@ -253,27 +254,34 @@ public class AddFragment extends Fragment {
                 Toast.makeText(getActivity(), "Save successful!",
                         Toast.LENGTH_LONG).show();
 
+
                 if (index > items.size() - 1) {
+                    Log.d("IF BLOCK", items.toString());
                     try {
                         items.add(formDataToActionItem(formData1));
                     } catch (ParseException e) {
                         throw new RuntimeException(e);
                     }
+
                 } else {
+
+                    Log.d("ELSE BLOCK", items.toString());
                     try {
                         items.set(index, formDataToActionItem(formData1));
+
+                        Log.d("ELSE BLOCK", items.toString());
                     } catch (ParseException e) {
                         throw new RuntimeException(e);
                     }
                 }
 
-                //Bundle newBundle = new Bundle();
-                //newBundle.putParcelableArrayList("action_items", items);
-                //AddFragmentDirections.ActionAddFragmentToDisplayFragment action = AddFragmentDirections.actionAddFragmentToDisplayFragment(
-                        //formType,
-                        //newBundle
-                //);
-                //NavHostFragment.findNavController(AddFragment.this).navigate(action);
+                Bundle newBundle = new Bundle();
+                newBundle.putParcelableArrayList("action_items", items);
+                AddFragmentDirections.ActionAddFragmentToDisplayFragment action = AddFragmentDirections.actionAddFragmentToDisplayFragment(
+                        formType,
+                        newBundle
+                );
+                NavHostFragment.findNavController(AddFragment.this).navigate(action);
 
                 binding.textView.setText("");
                 binding.title.setText("");
@@ -284,6 +292,7 @@ public class AddFragment extends Fragment {
                 binding.date.setText("");
                 binding.time.setText("");
                 binding.roomNo.setText("");
+
             }
         });
     }
@@ -346,7 +355,7 @@ public class AddFragment extends Fragment {
                 binding.location.setText("");
             }
             if ((items.get(index).itemType == Items.EXAM)) {
-                binding.location.setText((((Exam) item).getLocation().split("\\s+"))[0]);
+                binding.location.setText((((Exam) item).getLocation()));
             } else {
                 binding.location.setText("");
             }
@@ -367,7 +376,7 @@ public class AddFragment extends Fragment {
                 binding.roomNo.setText("");
             }
             if ((items.get(index).itemType == Items.EXAM)) {
-                binding.roomNo.setText((((Exam) item).getLocation().split("\\s+"))[1]);
+                binding.roomNo.setText((((Exam) item).getLocation()));
             } else {
                 binding.roomNo.setText("");
             }
@@ -388,6 +397,10 @@ public class AddFragment extends Fragment {
             binding.time.setText("");
             binding.roomNo.setText("");
         }
+    }
+
+    public static ArrayList<ActionItem> getItem() {
+        return items;
     }
 
 }

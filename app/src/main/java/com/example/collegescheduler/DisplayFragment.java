@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -67,10 +69,10 @@ class SortByComplete implements Comparator<ActionItem> {
  */
 public class DisplayFragment extends Fragment {
     private FragmentDisplayBinding binding;
-    private ArrayList<ActionItem> items;
+    private static ArrayList<ActionItem> items = new ArrayList<ActionItem>();
 
-    private ArrayList<ActionItem> mainItems = new ArrayList<>();
     private Items itemType;
+    private ArrayList<ActionItem> sortedItems = new ArrayList<>();
 
     public DisplayFragment() {
         // Required empty public constructor
@@ -100,9 +102,7 @@ public class DisplayFragment extends Fragment {
         if (getArguments() != null) {
             items = DisplayFragmentArgs.fromBundle(getArguments()).getActionItems().getParcelableArrayList("action_items");
             itemType = DisplayFragmentArgs.fromBundle(getArguments()).getItemType();
-            if (items != null) {
-                mainItems.addAll(items);
-            }
+            Log.d("ARRAYLIST", items.toString());
         }
 
     }
@@ -119,6 +119,7 @@ public class DisplayFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+
         if (itemType == Items.COURSE) {
             View myView = view.findViewById(R.id.sortOptions);
             myView.setVisibility(View.GONE);
@@ -139,6 +140,8 @@ public class DisplayFragment extends Fragment {
             }
         });
 
+            // Get the CardView and Modify button by ID
+            //Button modifyButton = view.findViewById(getResources().getIdentifier("btnModify" + items.indexOf(item), "id", getActivity().getPackageName()));
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -150,12 +153,12 @@ public class DisplayFragment extends Fragment {
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
 
-        ArrayList<ActionItem> sortedItems = new ArrayList<>();
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getItemType() == itemType) {
                 sortedItems.add(items.get(i));
             }
         }
+
         RadioGroup radioGroup = view.findViewById(R.id.sortOptions);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -180,6 +183,8 @@ public class DisplayFragment extends Fragment {
         } catch (Exception e ){
 
         }
+
+
     }
 
     public void repopulateCardView(View view, ArrayList<ActionItem> items) {
@@ -187,12 +192,35 @@ public class DisplayFragment extends Fragment {
         linearLayout.removeAllViews();
 
 
-        for (ActionItem item : items) {
+
+        Log.d("INDEX", "" + items.toString());
+        for (ActionItem item : sortedItems) {
+
         // Inflate the content layout for each item
             CardView cardView = (CardView) LayoutInflater.from(getContext()).inflate(R.layout.card_view, linearLayout, false);
-            cardView.setTag("cardview" + mainItems.indexOf(item));
-            cardView.findViewById(R.id.btnModify).setTag("btnModify" + mainItems.indexOf(item));
+            cardView.setTag("cardview" + items.indexOf(item));
+            ImageButton button = cardView.findViewById(R.id.btnModify);
+            button.setTag("btnModify" + items.indexOf(item));
 
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("action_items", items);
+
+            button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Toast.makeText(getActivity(), "Save successful!",
+                                Toast.LENGTH_LONG).show();
+
+                        DisplayFragmentDirections.ActionDisplayFragmentToAddFragment action = DisplayFragmentDirections.actionDisplayFragmentToAddFragment(
+                                //items.indexOf(item),
+                                items.indexOf(item),
+                                itemType,
+                                bundle
+                        );
+                        NavHostFragment.findNavController(DisplayFragment.this).navigate(action);
+                    }
+                });
             linearLayout.addView(item.modifyCardView(cardView));
         }
 
