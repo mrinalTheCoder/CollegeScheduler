@@ -321,13 +321,13 @@ public class AddFragment extends Fragment {
     public ActionItem formDataToActionItem(FormData formData) throws ParseException {
         ActionItem item;
         if (formData.formType == Items.COURSE) {
-            item = new Course(formData.title, formData.date + " " + formData.time, listToDays(formData.daysList), formData.course, formData.classSection, formData.professor, formData.location + " " + formData.roomNo);
+            item = new Course(formData.title, formData.date + ", " + formData.time, listToDays(formData.daysList), formData.course, formData.classSection, formData.professor, formData.location + " " + formData.roomNo);
         } else if (formData.formType == Items.EXAM) {
-            item = new Exam(formData.title, formData.date + " " + formData.time, formData.course,formData.location + " " + formData.roomNo);
+            item = new Exam(formData.title, formData.date + ", " + formData.time, formData.course,formData.location + " " + formData.roomNo);
         } else if (formData.formType == Items.ASSIGNMENT) {
-            item = new TodoItem(formData.title, formData.date + " " + formData.time, formData.course, true, Items.ASSIGNMENT);
+            item = new TodoItem(formData.title, formData.date + ", " + formData.time, formData.course, true, Items.ASSIGNMENT);
         } else {
-            item = new TodoItem(formData.title, formData.date + " " + formData.time, formData.course, true, Items.TODO);
+            item = new TodoItem(formData.title, formData.date + ", " + formData.time, formData.course, true, Items.TODO);
         }
         return item;
     }

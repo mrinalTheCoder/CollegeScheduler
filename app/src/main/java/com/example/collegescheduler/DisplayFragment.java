@@ -65,6 +65,7 @@ class SortByComplete implements Comparator<ActionItem> {
 public class DisplayFragment extends Fragment {
     private FragmentDisplayBinding binding;
     private static ArrayList<ActionItem> items = new ArrayList<ActionItem>();
+    private static ArrayList<ActionItem> sortedItems = new ArrayList<ActionItem>();
 
     private Items itemType;
     //private ArrayList<ActionItem> sortedItems = new ArrayList<>();
@@ -82,6 +83,12 @@ public class DisplayFragment extends Fragment {
         if (getArguments() != null) {
             items = DisplayFragmentArgs.fromBundle(getArguments()).getActionItems().getParcelableArrayList("action_items");
             itemType = DisplayFragmentArgs.fromBundle(getArguments()).getItemType();
+            sortedItems.clear();
+            for (int i = 0; i < items.size(); i++) {
+                if (items.get(i).getItemType() == itemType || (itemType == Items.TODO && items.get(i).getItemType() != Items.COURSE)) {
+                    sortedItems.add(items.get(i));
+                }
+            }
             Log.d("ARRAYLIST", items.toString());
         }
 
@@ -99,7 +106,6 @@ public class DisplayFragment extends Fragment {
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-
     }
 
     @Override
@@ -123,6 +129,28 @@ public class DisplayFragment extends Fragment {
         }
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("action_items", items);
+
+        RadioGroup radioGroup = view.findViewById(R.id.sortOptions);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                Log.d("radio_button", "button changed");
+
+                RadioButton radioButton = view.findViewById(checkedId);
+                switch (radioButton.getText().toString().toLowerCase()) {
+                    case "date":
+                        sortedItems.sort(new SortByDate());
+                        break;
+                    case "course":
+                        sortedItems.sort(new SortByCourse());
+                        break;
+                    case "complete":
+                        sortedItems.sort(new SortByComplete());
+                        break;
+                }
+                repopulateCardView();
+            }
+        });
 
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,37 +190,11 @@ public class DisplayFragment extends Fragment {
 
     }
 
-    public ArrayList<ActionItem> sortItems() {
-        View view = getView();
-        ArrayList<ActionItem> sortedItems = new ArrayList<>();
-        for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getItemType() == itemType || (itemType == Items.TODO && items.get(i).getItemType() != Items.COURSE)) {
-                sortedItems.add(items.get(i));
-            }
-        }
-        RadioGroup radioGroup = view.findViewById(R.id.sortOptions);
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton radioButton = view.findViewById(checkedId);
-                switch (radioButton.getText().toString().toLowerCase()) {
-                    case "date":
-                        sortedItems.sort(new SortByDate());
-                        break;
-                    case "course":
-                        sortedItems.sort(new SortByCourse());
-                        break;
-                    case "complete":
-                        sortedItems.sort(new SortByComplete());
-                        break;
-                }
-            }
-        });
-        return sortedItems;
-    }
     public void repopulateCardView() {
-        ArrayList<ActionItem> sortedItems = sortItems();
         linearLayout.removeAllViews();
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("action_items", items);
 
         for (ActionItem item : sortedItems) {
 
@@ -205,16 +207,11 @@ public class DisplayFragment extends Fragment {
             ImageButton deleteButton = cardView.findViewById(R.id.btnDelete);
             deleteButton.setTag("btnDelete" + items.indexOf(item));
 
-            Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList("action_items", items);
-
             modifyButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
-
                         DisplayFragmentDirections.ActionDisplayFragmentToAddFragment action = DisplayFragmentDirections.actionDisplayFragmentToAddFragment(
-                                //items.indexOf(item),
                                 items.indexOf(item),
                                 itemType,
                                 bundle
@@ -232,9 +229,8 @@ public class DisplayFragment extends Fragment {
                     ActionItem x = items.remove(items.indexOf(item));
                     Log.d("INDEX", "" + x.toString());
                     Log.d("INDEX", "" + items.toString());
-                    //sortedItems.remove(sortedItems.indexOf(item));
+                    sortedItems.remove(item);
                     repopulateCardView();
-
                 }
             });
             linearLayout.addView(item.modifyCardView(cardView));

@@ -2,6 +2,9 @@ package com.example.collegescheduler;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.TextView;
+
+import androidx.cardview.widget.CardView;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -61,4 +64,18 @@ public class Course extends ActionItem implements Parcelable {
             return new Course[size];
         }
     };
+
+    public CardView modifyCardView(CardView cardView) {
+        cardView = super.modifyCardView(cardView);
+        TextView textLocation = cardView.findViewById(R.id.textLocation);
+        textLocation.setText(this.location);
+
+        TextView textDate = cardView.findViewById(R.id.textDate);
+        textDate.setText(this.date + ", " + this.days);
+
+        TextView textName = cardView.findViewById(R.id.textName);
+        textName.setText(this.getTitle() + " - " + this.prof);
+
+        return cardView;
+    }
 }
