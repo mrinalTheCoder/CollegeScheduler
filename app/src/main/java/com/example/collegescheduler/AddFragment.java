@@ -193,6 +193,15 @@ public class AddFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         fillForm();
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Your custom back button behavior here
+                // For example, check if you want to consume the back press event in this fragment
+
+                // If you want to allow the default behavior (popping the back stack), you can do nothing here
+            }
+        });
 //        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
 //            @Override
 //            public void handleOnBackPressed() {

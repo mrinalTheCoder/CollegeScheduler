@@ -154,7 +154,7 @@ public class DisplayFragment extends Fragment {
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
 
         for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getItemType() == itemType) {
+            if (items.get(i).getItemType() == itemType || (itemType == Items.TODO && items.get(i).getItemType() != Items.COURSE)) {
                 sortedItems.add(items.get(i));
             }
         }
@@ -191,25 +191,26 @@ public class DisplayFragment extends Fragment {
         LinearLayout linearLayout = view.findViewById(R.id.container);
         linearLayout.removeAllViews();
 
-
-
         Log.d("INDEX", "" + items.toString());
         for (ActionItem item : sortedItems) {
 
         // Inflate the content layout for each item
             CardView cardView = (CardView) LayoutInflater.from(getContext()).inflate(R.layout.card_view, linearLayout, false);
             cardView.setTag("cardview" + items.indexOf(item));
-            ImageButton button = cardView.findViewById(R.id.btnModify);
-            button.setTag("btnModify" + items.indexOf(item));
+            ImageButton modifyButton = cardView.findViewById(R.id.btnModify);
+            modifyButton.setTag("btnModify" + items.indexOf(item));
+
+            ImageButton deleteButton = cardView.findViewById(R.id.btnDelete);
+            deleteButton.setTag("btnDelete" + items.indexOf(item));
 
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList("action_items", items);
 
-            button.setOnClickListener(new View.OnClickListener() {
+            modifyButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
-                        Toast.makeText(getActivity(), "Save successful!",
+                        Toast.makeText(getActivity(), "Modify successful!",
                                 Toast.LENGTH_LONG).show();
 
                         DisplayFragmentDirections.ActionDisplayFragmentToAddFragment action = DisplayFragmentDirections.actionDisplayFragmentToAddFragment(
@@ -221,6 +222,18 @@ public class DisplayFragment extends Fragment {
                         NavHostFragment.findNavController(DisplayFragment.this).navigate(action);
                     }
                 });
+
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Toast.makeText(getActivity(), "Delete successful!",
+                            Toast.LENGTH_LONG).show();
+                    items.remove(items.indexOf(item));
+                    //repopulateCardView(view, items);
+
+                }
+            });
             linearLayout.addView(item.modifyCardView(cardView));
         }
 
