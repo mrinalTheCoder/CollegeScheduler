@@ -212,8 +212,6 @@ public class DisplayFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
 
-                        Toast.makeText(getActivity(), "Modify successful!",
-                                Toast.LENGTH_LONG).show();
 
                         DisplayFragmentDirections.ActionDisplayFragmentToAddFragment action = DisplayFragmentDirections.actionDisplayFragmentToAddFragment(
                                 //items.indexOf(item),

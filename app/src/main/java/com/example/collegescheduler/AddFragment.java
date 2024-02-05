@@ -339,37 +339,76 @@ public class AddFragment extends Fragment {
     public void fillForm() {
         if (index <= items.size() - 1) {
             ActionItem item = items.get(index);
-            String[] itemDataTime = item.getDate().split("\\s+");
-            binding.title.setText(item.getTitle());
-            binding.course.setText(item.getCourse());
+            String[] itemDataTime = (item.getDate() != null) ? item.getDate().split("\\s+") : new String[]{"", ""};
+            String[] locationArray;
+            String locationData = "";
+            String roomNoData = "";
 
-            if ((items.get(index).itemType == Items.COURSE)) {
-                binding.location.setText((((Course) item).getLocation().split("\\s+"))[0]);
+            if (item.getItemType() == Items.COURSE && ((Course) item).getLocation() != null) {
+                locationArray = ((Course) item).getLocation().split("\\s+");
             } else {
-                binding.location.setText("");
+                locationArray = new String[]{"", ""};
             }
-            if ((items.get(index).itemType == Items.EXAM)) {
+
+            if (item.getItemType() == Items.COURSE) {
+                if (locationArray.length == 0) {
+                    locationData = "";
+                    roomNoData = "";
+                } else if (locationArray.length == 1) {
+                    locationData = locationArray[0];
+                    roomNoData = "";
+                } else {
+                    locationData = locationArray[0];
+                    roomNoData = locationArray[1];
+                }
+            }
+
+            if ((item.getTitle() != null)) {
+                binding.title.setText(item.getTitle());
+            } else {
+                binding.title.setText("");
+            }
+
+            if ((item.getCourse() != null)) {
+                binding.course.setText(item.getCourse());
+            } else {
+                binding.course.setText("");
+            }
+
+            if ((items.get(index).itemType == Items.COURSE) && ((Course) item).getLocation() != null) {
+                binding.location.setText(locationData);
+            } else if ((items.get(index).itemType == Items.EXAM) && ((Exam) item).getLocation() != null) {
                 binding.location.setText((((Exam) item).getLocation()));
             } else {
                 binding.location.setText("");
             }
 
-            if ((items.get(index).itemType == Items.COURSE)) {
+            if ((items.get(index).itemType == Items.COURSE) && ((Course) item).getProf() != null) {
                 binding.professor.setText(((Course) item).getProf());
             } else {
                 binding.professor.setText("");
             }
 
-            binding.classSection.setText(item.getCourse());
-            binding.date.setText(itemDataTime[0]);
-            binding.time.setText(itemDataTime[1]);
-
-            if ((items.get(index).itemType == Items.COURSE)) {
-                binding.roomNo.setText((((Course) item).getLocation().split("\\s+"))[1]);
+            if ((item.getCourse() != null)) {
+                binding.classSection.setText(item.getCourse());
             } else {
-                binding.roomNo.setText("");
+                binding.classSection.setText("");
             }
-            if ((items.get(index).itemType == Items.EXAM)) {
+
+            if (itemDataTime.length == 0) {
+                binding.date.setText("");
+                binding.time.setText("");
+            } else if (itemDataTime.length == 1) {
+                binding.date.setText(itemDataTime[0]);
+                binding.time.setText("");
+            } else {
+                binding.date.setText(itemDataTime[0]);
+                binding.time.setText(itemDataTime[1]);
+            }
+
+            if ((items.get(index).itemType == Items.COURSE) && ((Course) item).getLocation() != null) {
+                binding.roomNo.setText(roomNoData);
+            } else if ((items.get(index).itemType == Items.EXAM) && ((Exam) item).getLocation() != null) {
                 binding.roomNo.setText((((Exam) item).getLocation()));
             } else {
                 binding.roomNo.setText("");
@@ -425,7 +464,11 @@ public class AddFragment extends Fragment {
         s = s.replace("F", "Friday, ");
         s = s.replace("S", "Saturday, ");
         s = s.replace("N", "Sunday");
-        s = s.substring(0, s.length() - 2);
+
+        if (s.length() >= 2) {
+            s = s.substring(0, s.length() - 2);
+        }
+
         return s;
     }
 
@@ -435,3 +478,4 @@ public class AddFragment extends Fragment {
     }
 
 }
+
