@@ -225,7 +225,7 @@ public class DisplayFragment extends Fragment {
                 public void onClick(View view) {
 
                     Toast.makeText(getActivity(), "Delete successful!",
-                            Toast.LENGTH_LONG).show();
+                            Toast.LENGTH_SHORT).show();
                     ActionItem x = items.remove(items.indexOf(item));
                     Log.d("INDEX", "" + x.toString());
                     Log.d("INDEX", "" + items.toString());
