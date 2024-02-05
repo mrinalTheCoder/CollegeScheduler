@@ -1,5 +1,7 @@
 package com.example.collegescheduler;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -113,7 +115,6 @@ public class DisplayFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         MaterialToolbar toolbar = (MaterialToolbar) getActivity().findViewById(R.id.toolbar);
-        toolbar.setTitle(itemType.toString().toUpperCase());
         binding = FragmentDisplayBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -189,13 +190,78 @@ public class DisplayFragment extends Fragment {
         repopulateCardView();
 
     }
+     private void showConfirmationDialog(String s, ActionItem item) {
+        //AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
 
+        builder.setTitle("Confirmation");
+
+        // Set up the buttons
+         if (s.equals("modify")) {
+             builder.setMessage("Do you want to modify?");
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelableArrayList("action_items", items);
+
+                    DisplayFragmentDirections.ActionDisplayFragmentToAddFragment action = DisplayFragmentDirections.actionDisplayFragmentToAddFragment(
+                            items.indexOf(item),
+                            itemType,
+                            bundle
+                    );
+                    NavHostFragment.findNavController(DisplayFragment.this).navigate(action);
+                    // Handle positive button click
+
+                    // Add your code here for the action to be performed on confirmation
+                }
+            });
+         }
+         else if (s.equals("complete")) {
+             builder.setMessage("Do you want to set as complete/incomplete?");
+             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                 @Override
+                 public void onClick(DialogInterface dialog, int which) {
+
+                     if (item instanceof TodoItem) {
+                         ((TodoItem) item).setComplete();
+                     }
+                     repopulateCardView();
+                     // Handle positive button click
+                     // Add your code here for the action to be performed on confirmation
+                 }
+             });
+         } else if (s.equals("delete")) {
+
+             builder.setMessage("Do you want to delete?");
+             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                 @Override
+                 public void onClick(DialogInterface dialog, int which) {
+                     // Add your code here for the action to be performed on confirmation
+
+                     Toast.makeText(getActivity(), "Delete successful!",
+                             Toast.LENGTH_SHORT).show();
+                     items.remove(item);
+                     sortedItems.remove(item);
+                     repopulateCardView();
+                 }
+             });
+         }
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Handle negative button click or do nothing
+                dialog.dismiss();
+            }
+        });
+
+        // Create and show the dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
     public void repopulateCardView() {
         linearLayout.removeAllViews();
-
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("action_items", items);
-
         for (ActionItem item : sortedItems) {
 
         // Inflate the content layout for each item
@@ -211,26 +277,20 @@ public class DisplayFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
 
-                        DisplayFragmentDirections.ActionDisplayFragmentToAddFragment action = DisplayFragmentDirections.actionDisplayFragmentToAddFragment(
-                                items.indexOf(item),
-                                itemType,
-                                bundle
-                        );
-                        NavHostFragment.findNavController(DisplayFragment.this).navigate(action);
+                        showConfirmationDialog("modify", item);
                     }
                 });
 
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    Toast.makeText(getActivity(), "Delete successful!",
-                            Toast.LENGTH_SHORT).show();
-                    ActionItem x = items.remove(items.indexOf(item));
-                    Log.d("INDEX", "" + x.toString());
-                    Log.d("INDEX", "" + items.toString());
-                    sortedItems.remove(item);
-                    repopulateCardView();
+                    showConfirmationDialog("delete", item);
+                }
+            });
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showConfirmationDialog("complete", item);
                 }
             });
             linearLayout.addView(item.modifyCardView(cardView));

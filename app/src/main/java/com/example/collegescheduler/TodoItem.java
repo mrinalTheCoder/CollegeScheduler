@@ -50,6 +50,10 @@ public class TodoItem extends ActionItem implements Parcelable {
         return complete;
     }
 
+    public void setComplete() {
+        this.complete = !this.complete;
+    }
+
     public CardView modifyCardView(CardView cardView) {
         cardView = super.modifyCardView(cardView);
         if (this.complete) {
