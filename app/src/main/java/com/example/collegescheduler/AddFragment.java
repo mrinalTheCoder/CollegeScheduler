@@ -225,23 +225,23 @@ public class AddFragment extends Fragment {
             binding.form.setText("To Do List Details");
         }
 
+        Bundle newBundle = new Bundle();
+        newBundle.putParcelableArrayList("action_items", items);
+
+        binding.backButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddFragmentDirections.ActionAddFragmentToDisplayFragment action = AddFragmentDirections.actionAddFragmentToDisplayFragment(
+                        formType,
+                        newBundle
+                );
+                NavHostFragment.findNavController(AddFragment.this).navigate(action);
+            }
+        });
+
         binding.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*
-                items.add(new ActionItem("", "", "", null));
-                index = items.size() - 1;
-
-
-
-                String[] itemDataTime;
-                if (item.getDate().equals("")) {
-                    itemDataTime = new String[2];
-                } else {
-                    itemDataTime = item.getDate().split(" ");
-                }*/
-                //String[] itemDataTime = {"20", "10"};
-
                 title = binding.title.getText().toString();
                 course = binding.course.getText().toString();
                 location = binding.location.getText().toString();

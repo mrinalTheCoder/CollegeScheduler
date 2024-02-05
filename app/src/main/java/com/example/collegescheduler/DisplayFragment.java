@@ -87,6 +87,7 @@ public class DisplayFragment extends Fragment {
 
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("qction_items", items);
+
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -122,6 +123,17 @@ public class DisplayFragment extends Fragment {
         }
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("action_items", items);
+
+        binding.backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DisplayFragmentDirections.ActionDisplayFragmentToHomeFragment action = DisplayFragmentDirections.actionDisplayFragmentToHomeFragment(
+                        bundle
+                );
+                NavHostFragment.findNavController(DisplayFragment.this).navigate(action);
+            }
+        });
+
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

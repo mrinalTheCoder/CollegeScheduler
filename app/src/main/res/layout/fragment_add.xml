@@ -8,8 +8,8 @@
     tools:context=".AddFragment">
 
     <LinearLayout
-        android:layout_height="wrap_content"
         android:layout_width="410dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
@@ -27,14 +27,14 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:layout_marginHorizontal="20dp">
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Title"/>
+                android:hint="Title" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -42,8 +42,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:layout_marginHorizontal="20dp">
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/course"
@@ -76,8 +76,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:layout_marginHorizontal="20dp">
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/date"
@@ -91,8 +91,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:layout_marginHorizontal="20dp">
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/time"
@@ -107,7 +107,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView"
@@ -121,22 +121,22 @@
                 android:hint="Days of the Week"
                 android:padding="12dp"
                 android:textSize="16sp"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:layout_marginHorizontal="20dp">
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/location"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Location"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -144,15 +144,15 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:layout_marginHorizontal="20dp">
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/roomNo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Room Number"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -160,15 +160,15 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:layout_marginHorizontal="20dp">
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/professor"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Professor"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -176,17 +176,23 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:layout_marginHorizontal="20dp">
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/classSection"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Class Section"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/backButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Back" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/saveButton"
