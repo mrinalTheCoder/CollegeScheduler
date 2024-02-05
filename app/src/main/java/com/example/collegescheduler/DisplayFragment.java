@@ -62,11 +62,6 @@ class SortByComplete implements Comparator<ActionItem> {
     }
 }
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DisplayFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class DisplayFragment extends Fragment {
     private FragmentDisplayBinding binding;
     private static ArrayList<ActionItem> items = new ArrayList<ActionItem>();
@@ -76,22 +71,6 @@ public class DisplayFragment extends Fragment {
 
     public DisplayFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment DisplayFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DisplayFragment newInstance() {
-        DisplayFragment fragment = new DisplayFragment();
-
-        Bundle args = new Bundle();
-        //args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -104,6 +83,20 @@ public class DisplayFragment extends Fragment {
             itemType = DisplayFragmentArgs.fromBundle(getArguments()).getItemType();
             Log.d("ARRAYLIST", items.toString());
         }
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("qction_items", items);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Log.d("back_button", "DisplayFragment back button pressed");
+                DisplayFragmentDirections.ActionDisplayFragmentToHomeFragment action = DisplayFragmentDirections.actionDisplayFragmentToHomeFragment(
+                        bundle
+                );
+                NavHostFragment.findNavController(DisplayFragment.this).navigate(action);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 
     }
 
@@ -139,19 +132,6 @@ public class DisplayFragment extends Fragment {
                 NavHostFragment.findNavController(DisplayFragment.this).navigate(action);
             }
         });
-
-            // Get the CardView and Modify button by ID
-            //Button modifyButton = view.findViewById(getResources().getIdentifier("btnModify" + items.indexOf(item), "id", getActivity().getPackageName()));
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                DisplayFragmentDirections.ActionDisplayFragmentToHomeFragment action = DisplayFragmentDirections.actionDisplayFragmentToHomeFragment(
-                        bundle
-                );
-                NavHostFragment.findNavController(DisplayFragment.this).navigate(action);
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
 
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getItemType() == itemType || (itemType == Items.TODO && items.get(i).getItemType() != Items.COURSE)) {

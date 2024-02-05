@@ -30,7 +30,7 @@ public class AddFragment extends Fragment {
     //private Calendar date;
     private Context context = getActivity();
     private ArrayList<FormData> formDataArrayList = new ArrayList<>();
-    private static ArrayList<ActionItem> items;
+    private ArrayList<ActionItem> items;
 
     private int index;
 
@@ -95,6 +95,21 @@ public class AddFragment extends Fragment {
             formType = AddFragmentArgs.fromBundle(getArguments()).getItemType();
             index = AddFragmentArgs.fromBundle(getArguments()).getIndex();
         }
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("action_items", items);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Log.d("back_button", "AddFragment Back Button pressed");
+                AddFragmentDirections.ActionAddFragmentToDisplayFragment action = AddFragmentDirections.actionAddFragmentToDisplayFragment(
+                        formType,
+                        bundle
+                );
+                NavHostFragment.findNavController(AddFragment.this).navigate(action);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override
@@ -193,27 +208,6 @@ public class AddFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         fillForm();
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                // Your custom back button behavior here
-                // For example, check if you want to consume the back press event in this fragment
-
-                // If you want to allow the default behavior (popping the back stack), you can do nothing here
-            }
-        });
-//        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-//            @Override
-//            public void handleOnBackPressed() {
-//                Bundle bundle = AddFragmentArgs.fromBundle(getArguments()).getActionItems();
-//                AddFragmentDirections.ActionAddFragmentToDisplayFragment action = AddFragmentDirections.actionAddFragmentToDisplayFragment(
-//                        formType,
-//                        bundle
-//                );
-//                NavHostFragment.findNavController(AddFragment.this).navigate(action);
-//            }
-//        };
-//        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
 
         if (formType == Items.COURSE) {
             binding.form.setText("Course Details");
@@ -342,15 +336,6 @@ public class AddFragment extends Fragment {
         return formDataArrayList;
     }
 
-    public static AddFragment newInstance() {
-
-        Bundle args = new Bundle();
-
-        AddFragment fragment = new AddFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     public void fillForm() {
         if (index <= items.size() - 1) {
             ActionItem item = items.get(index);
@@ -445,7 +430,7 @@ public class AddFragment extends Fragment {
     }
 
 
-    public static ArrayList<ActionItem> getItem() {
+    public ArrayList<ActionItem> getItem() {
         return items;
     }
 
