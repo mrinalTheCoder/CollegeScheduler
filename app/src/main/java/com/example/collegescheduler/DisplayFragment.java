@@ -72,8 +72,9 @@ public class DisplayFragment extends Fragment {
     private static ArrayList<ActionItem> items = new ArrayList<ActionItem>();
 
     private Items itemType;
-    private ArrayList<ActionItem> sortedItems = new ArrayList<>();
+    //private ArrayList<ActionItem> sortedItems = new ArrayList<>();
 
+    LinearLayout linearLayout;
     public DisplayFragment() {
         // Required empty public constructor
     }
@@ -119,7 +120,7 @@ public class DisplayFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-
+        linearLayout = view.findViewById(R.id.container);
         if (itemType == Items.COURSE) {
             View myView = view.findViewById(R.id.sortOptions);
             myView.setVisibility(View.GONE);
@@ -153,12 +154,18 @@ public class DisplayFragment extends Fragment {
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
 
+        repopulateCardView();
+
+    }
+
+    public ArrayList<ActionItem> sortItems() {
+        View view = getView();
+        ArrayList<ActionItem> sortedItems = new ArrayList<>();
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getItemType() == itemType || (itemType == Items.TODO && items.get(i).getItemType() != Items.COURSE)) {
                 sortedItems.add(items.get(i));
             }
         }
-
         RadioGroup radioGroup = view.findViewById(R.id.sortOptions);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -175,23 +182,14 @@ public class DisplayFragment extends Fragment {
                         sortedItems.sort(new SortByComplete());
                         break;
                 }
-                repopulateCardView(view, sortedItems);
             }
         });
-        try {
-            repopulateCardView(view, sortedItems);
-        } catch (Exception e ){
-
-        }
-
-
+        return sortedItems;
     }
-
-    public void repopulateCardView(View view, ArrayList<ActionItem> items) {
-        LinearLayout linearLayout = view.findViewById(R.id.container);
+    public void repopulateCardView() {
+        ArrayList<ActionItem> sortedItems = sortItems();
         linearLayout.removeAllViews();
 
-        Log.d("INDEX", "" + items.toString());
         for (ActionItem item : sortedItems) {
 
         // Inflate the content layout for each item
@@ -229,8 +227,11 @@ public class DisplayFragment extends Fragment {
 
                     Toast.makeText(getActivity(), "Delete successful!",
                             Toast.LENGTH_LONG).show();
-                    items.remove(items.indexOf(item));
-                    //repopulateCardView(view, items);
+                    ActionItem x = items.remove(items.indexOf(item));
+                    Log.d("INDEX", "" + x.toString());
+                    Log.d("INDEX", "" + items.toString());
+                    //sortedItems.remove(sortedItems.indexOf(item));
+                    repopulateCardView();
 
                 }
             });
