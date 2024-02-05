@@ -255,7 +255,7 @@ public class AddFragment extends Fragment {
                 formData1.setFormData(title, course, location, professor, classSection, date, time, roomNo, formType, daysList);
 
                 Toast.makeText(getActivity(), "Save successful!",
-                        Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_SHORT).show();
 
 
                 if (index > items.size() - 1) {
