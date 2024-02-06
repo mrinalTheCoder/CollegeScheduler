@@ -130,14 +130,12 @@ public class DisplayFragment extends Fragment {
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                Log.d("radio_button", "button changed");
-
                 RadioButton radioButton = view.findViewById(checkedId);
                 switch (radioButton.getText().toString().toLowerCase()) {
                     case "date":
                         sortedItems.sort(new SortByDate());
                         break;
-                    case "course":
+                    case "class":
                         sortedItems.sort(new SortByCourse());
                         break;
                     case "complete":
