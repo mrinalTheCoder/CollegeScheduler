@@ -26,7 +26,6 @@ import androidx.appcompat.app.AlertDialog;
 
 public class AddFragment extends Fragment {
     private FragmentAddBinding binding;
-    //private Calendar date;
     private ArrayList<FormData> formDataArrayList = new ArrayList<>();
     private ArrayList<ActionItem> items;
 
@@ -122,28 +121,19 @@ public class AddFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                // Initialize alert dialog
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-                // set title
                 builder.setTitle("Select Language");
 
-                // set dialog non cancelable
                 builder.setCancelable(false);
 
                 builder.setMultiChoiceItems(daysArray, selectedDays, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-                        // check condition
                         if (b) {
-                            // when checkbox selected
-                            // Add position  in lang list
                             daysList.add(i);
-                            // Sort array list
                             Collections.sort(daysList);
                         } else {
-                            // when checkbox unselected
-                            // Remove position from langList
                             daysList.remove(Integer.valueOf(i));
                         }
                     }
@@ -152,21 +142,13 @@ public class AddFragment extends Fragment {
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        // Initialize string builder
                         StringBuilder stringBuilder = new StringBuilder();
-                        // use for loop
                         for (int j = 0; j < daysList.size(); j++) {
-                            // concat array value
                             stringBuilder.append(daysArray[daysList.get(j)]);
-                            // check condition
                             if (j != daysList.size() - 1) {
-                                // When j value  not equal
-                                // to lang list size - 1
-                                // add comma
                                 stringBuilder.append(", ");
                             }
                         }
-                        // set text on textView
                         textView.setText(stringBuilder.toString());
                     }
                 });
@@ -174,25 +156,19 @@ public class AddFragment extends Fragment {
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        // dismiss dialog
                         dialogInterface.dismiss();
                     }
                 });
                 builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        // use for loop
                         for (int j = 0; j < selectedDays.length; j++) {
-                            // remove all selection
                             selectedDays[j] = false;
-                            // clear language list
                             daysList.clear();
-                            // clear text view value
                             textView.setText("");
                         }
                     }
                 });
-                // show dialog
                 builder.show();
             }
         });
