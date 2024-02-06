@@ -3,6 +3,7 @@ package com.example.collegescheduler;
 import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 
@@ -55,6 +56,8 @@ public class TodoItem extends ActionItem implements Parcelable {
 
     public CardView modifyCardView(CardView cardView) {
         cardView = super.modifyCardView(cardView);
+        TextView textLocation = cardView.findViewById(R.id.textLocation);
+        textLocation.setText("");
         if (this.complete) {
             cardView.setCardBackgroundColor(Color.parseColor("#90EE90"));
         }
