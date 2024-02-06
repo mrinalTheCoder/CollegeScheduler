@@ -3,7 +3,6 @@ package com.example.collegescheduler;
 import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 

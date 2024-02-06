@@ -64,19 +64,19 @@
                 android:id="@+id/completeRB"
                 android:layout_width="95dp"
                 android:layout_height="wrap_content"
-                android:text="Complete" />
+                android:text="@string/complete" />
 
             <RadioButton
                 android:id="@+id/courseRB"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:text="Course" />
+                android:text="@string/class_text" />
 
             <RadioButton
                 android:id="@+id/dateRB"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:text="Date"
+                android:text="@string/date"
                 tools:layout_editor_absoluteX="23dp"
                 tools:layout_editor_absoluteY="646dp" />
         </RadioGroup>
@@ -86,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="Sort By:"
+            android:text="@string/sort_by"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/sortOptions"
             app:layout_constraintStart_toStartOf="parent" />
@@ -96,7 +96,7 @@
             android:layout_width="95dp"
             android:layout_height="45dp"
             android:layout_marginTop="20dp"
-            android:text="Back"
+            android:text="@string/back"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="9dp" />

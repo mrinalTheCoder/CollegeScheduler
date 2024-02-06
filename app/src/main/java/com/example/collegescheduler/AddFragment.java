@@ -1,6 +1,5 @@
 package com.example.collegescheduler;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,13 +27,10 @@ import androidx.appcompat.app.AlertDialog;
 public class AddFragment extends Fragment {
     private FragmentAddBinding binding;
     //private Calendar date;
-    private Context context = getActivity();
     private ArrayList<FormData> formDataArrayList = new ArrayList<>();
     private ArrayList<ActionItem> items;
 
     private int index;
-
-    private int foundInArrayListIndex = -1;
 
     String title;
     String course;

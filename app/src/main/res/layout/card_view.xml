@@ -17,7 +17,7 @@
             android:id="@+id/textName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="John Doe"
+            android:text="@string/namePlaceholder"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textName"
             android:layout_marginTop="8dp"
-            android:text="Date: 2024-02-03"
+            android:text="@string/datePlaceholder"
             android:textSize="14sp" />
 
         <!-- Time TextView -->
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textDate"
             android:layout_marginTop="4dp"
-            android:text="Time: 10:00 AM"
+            android:text="@string/coursePlaceholder"
             android:textSize="14sp" />
 
         <!-- Location TextView -->
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textCourse"
             android:layout_marginTop="4dp"
-            android:text="Time: 10:00 AM"
+            android:text="@string/locationPlaceholder"
             android:textSize="14sp" />
 
         <ImageButton

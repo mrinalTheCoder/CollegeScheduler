@@ -23,7 +23,7 @@
             android:layout_height="match_parent"
             android:layout_margin="20dp"
             android:layout_weight="1"
-            android:text="Class" />
+            android:text="@string/class_text" />
 
         <Button
             android:id="@+id/buttonAssignment"
@@ -31,7 +31,7 @@
             android:layout_height="match_parent"
             android:layout_margin="20dp"
             android:layout_weight="1"
-            android:text="Assignment" />
+            android:text="@string/assignment" />
 
     </LinearLayout>
 
@@ -48,7 +48,7 @@
             android:layout_height="match_parent"
             android:layout_margin="20dp"
             android:layout_weight="1"
-            android:text="Exam" />
+            android:text="@string/exam" />
 
         <Button
             android:id="@+id/buttonToDo"
@@ -56,6 +56,6 @@
             android:layout_height="match_parent"
             android:layout_margin="20dp"
             android:layout_weight="1"
-            android:text="ToDo" />
+            android:text="@string/todo" />
     </LinearLayout>
 </LinearLayout>

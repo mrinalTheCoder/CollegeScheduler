@@ -1,11 +1,7 @@
 package com.example.collegescheduler;
 
-import static java.security.AccessController.getContext;
-
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.view.LayoutInflater;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;

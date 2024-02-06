@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 
-import java.io.Serializable;
 import java.text.ParseException;
 
 public class Course extends ActionItem implements Parcelable {

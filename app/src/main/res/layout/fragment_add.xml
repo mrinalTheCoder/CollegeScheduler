@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
-            android:text="Form"
+            android:text="@string/formText"
             android:textAlignment="center"
             android:textSize="30sp" />
 
@@ -34,7 +34,7 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Title" />
+                android:hint="@string/titleText" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -49,28 +49,9 @@
                 android:id="@+id/course"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Associated Course" />
+                android:hint="@string/associated_course" />
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <!--    <LinearLayout-->
-        <!--        android:id="@+id/LinearLayout1"-->
-        <!--        android:layout_width="match_parent"-->
-        <!--        android:layout_height="match_parent"-->
-        <!--        android:gravity="center"-->
-        <!--        android:orientation="vertical" >-->
-
-        <!--        <Button-->
-        <!--            android:id="@+id/timeButton"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:width="300dp"-->
-        <!--            android:height="20dp"-->
-        <!--            android:backgroundTint="#3F51B5"-->
-        <!--            android:onClick="popDateTimePicker"-->
-        <!--            android:text="Date and Time"-->
-        <!--            android:textSize="20sp" />-->
-        <!--    </LinearLayout>-->
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
@@ -83,7 +64,7 @@
                 android:id="@+id/date"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Date" />
+                android:hint="@string/date" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -98,7 +79,7 @@
                 android:id="@+id/time"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Time" />
+                android:hint="@string/time" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -118,7 +99,7 @@
                 android:backgroundTint="@android:color/transparent"
                 android:drawableRight="@android:drawable/arrow_down_float"
                 android:drawablePadding="16dp"
-                android:hint="Days of the Week"
+                android:hint="@string/days_text"
                 android:padding="12dp"
                 android:textSize="16sp"
                 android:visibility="gone" />
@@ -135,7 +116,7 @@
                 android:id="@+id/location"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Location"
+                android:hint="@string/location"
                 android:visibility="gone" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -151,7 +132,7 @@
                 android:id="@+id/roomNo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Room Number"
+                android:hint="@string/room_number"
                 android:visibility="gone" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -167,7 +148,7 @@
                 android:id="@+id/professor"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Professor"
+                android:hint="@string/prof"
                 android:visibility="gone" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -183,7 +164,7 @@
                 android:id="@+id/classSection"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Class Section"
+                android:hint="@string/section"
                 android:visibility="gone" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -192,7 +173,7 @@
             android:id="@+id/backButton2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Back" />
+            android:text="@string/back" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/saveButton"
@@ -200,7 +181,7 @@
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:layout_marginHorizontal="20dp"
-            android:text="Save"
+            android:text="@string/save"
             android:textSize="20sp"
             tools:ignore="InvalidId" />
 

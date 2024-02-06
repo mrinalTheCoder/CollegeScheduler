@@ -14,21 +14,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-import android.widget.TextView;
 
 import com.example.collegescheduler.databinding.FragmentDisplayBinding;
-import com.example.collegescheduler.databinding.FragmentHomeBinding;
 import com.google.android.material.appbar.MaterialToolbar;
 
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 class SortByDate implements Comparator<ActionItem> {
@@ -174,8 +169,6 @@ public class DisplayFragment extends Fragment {
                 NavHostFragment.findNavController(DisplayFragment.this).navigate(action);
             }
         });
-            // Get the CardView and Modify button by ID
-            //Button modifyButton = view.findViewById(getResources().getIdentifier("btnModify" + items.indexOf(item), "id", getActivity().getPackageName()));
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -191,7 +184,6 @@ public class DisplayFragment extends Fragment {
 
     }
      private void showConfirmationDialog(String s, ActionItem item) {
-        //AlertDialog.Builder builder = new AlertDialog.Builder(this);
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
 
         builder.setTitle("Confirmation");
@@ -211,9 +203,6 @@ public class DisplayFragment extends Fragment {
                             bundle
                     );
                     NavHostFragment.findNavController(DisplayFragment.this).navigate(action);
-                    // Handle positive button click
-
-                    // Add your code here for the action to be performed on confirmation
                 }
             });
          }
@@ -227,8 +216,6 @@ public class DisplayFragment extends Fragment {
                          ((TodoItem) item).setComplete();
                      }
                      repopulateCardView();
-                     // Handle positive button click
-                     // Add your code here for the action to be performed on confirmation
                  }
              });
          } else if (s.equals("delete")) {
@@ -237,8 +224,6 @@ public class DisplayFragment extends Fragment {
              builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                  @Override
                  public void onClick(DialogInterface dialog, int which) {
-                     // Add your code here for the action to be performed on confirmation
-
                      Toast.makeText(getActivity(), "Delete successful!",
                              Toast.LENGTH_SHORT).show();
                      items.remove(item);
