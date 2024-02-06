@@ -13,26 +13,25 @@
 
         <LinearLayout
             android:id="@+id/linearLayout3"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="411dp"
+            android:layout_height="570dp"
             android:layout_marginBottom="30dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@+id/sortOptions"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="0dp">
             <!-- Include the Date Picker in a hidden state -->
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="556dp"
                 android:paddingTop="100dp">
 
                 <LinearLayout
                     android:id="@+id/container"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                </LinearLayout>
+                    android:orientation="vertical" />
 
             </ScrollView>
 
